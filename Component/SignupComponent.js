@@ -80,8 +80,12 @@ export default function SingupScreen({ navigation }) {
             Pincode: "",
           },
           accountStatus: {
-            Shop: null,
-            Role: "CLIENT",
+            Shop: {
+              ShopID: "",
+              ShopName: "This is a Test Mechanic",
+              ShopDescription: "Testing Testing",
+            },
+            Role: "MECHANIC",
           },
         }),
       })

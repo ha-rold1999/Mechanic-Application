@@ -18,34 +18,6 @@ export function PostAccountCred() {
   const email = useSelector(AccountCred.email);
   const username = useSelector(AccountCred.username);
   const password = useSelector(AccountCred.password);
-
-  console.log(
-    "Log this:" +
-      JSON.stringify({
-        personalInformation: {
-          Firstname: firstname,
-          Lastname: lastname,
-          Contact: contact,
-          Birthdate: new Date(Date.parse(birthdate)),
-          Address: address,
-          LicenseNumber: licenseNo,
-          Expiry: new Date(Date.parse(expiryDate)),
-        },
-        credential: {
-          Username: username,
-          Password: password,
-          Email: email,
-        },
-        wallet: {
-          Balance: 0,
-          Pincode: "",
-        },
-        accountStatus: {
-          Shop: null,
-          Role: "CLIENT",
-        },
-      })
-  );
   fetch("http://203.177.71.218:5003/api/Account", {
     method: "POST",
     headers: {
@@ -72,8 +44,12 @@ export function PostAccountCred() {
         Pincode: "",
       },
       accountStatus: {
-        Shop: null,
-        Role: "CLIENT",
+        Shop: {
+          ShopID: "",
+          ShopName: "This is a Test Mechanic",
+          ShopDescription: "Testing Testing",
+        },
+        Role: "MECHANIC",
       },
     }),
   })

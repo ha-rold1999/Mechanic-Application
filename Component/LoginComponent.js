@@ -40,6 +40,7 @@ export default function LoginScreen() {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(JSON.stringify(data, null, 2));
           if (data.Status == 404) {
             setIsExist(true);
             setIsPasswordWrong(false);
@@ -94,9 +95,9 @@ export default function LoginScreen() {
             onFocus={() => dispatch(loginForm.handleUsername(""))}
             style={LoginForm.input}
             onChangeText={(text) =>
-              dispatch(loginForm.handleUsername("test123"))
+              dispatch(loginForm.handleUsername("mechanic1"))
             }
-            value="test123"
+            value="mechanic1"
           />
           {usernameError && (
             <Text style={{ color: "red" }}>{usernameError}</Text>
