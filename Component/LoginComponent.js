@@ -7,8 +7,9 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as loginForm from "../Redux/LoginFormReducers/LoginReducers";
 import LoginModal from "./Signup/ModalComponent/LoginModal";
+import { getProfile } from "../Redux/ProfileReducers/ProfileReducer";
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const username = useSelector(loginForm.username);
@@ -40,7 +41,6 @@ export default function LoginScreen() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(JSON.stringify(data, null, 2));
           if (data.Status == 404) {
             setIsExist(true);
             setIsPasswordWrong(false);
@@ -53,6 +53,7 @@ export default function LoginScreen() {
             setIsExist(false);
             setIsPasswordWrong(false);
             setIsSuccess(true);
+            dispatch(getProfile(data));
           }
           setIsLoading(false);
         })
@@ -78,6 +79,7 @@ export default function LoginScreen() {
         isLoading={isLoading}
         isSuccess={isSuccess}
         setModalVisible={setModalVisible}
+        navigation={navigation}
       />
       {/* Logo */}
       <View style={LoginForm.img}>
@@ -94,10 +96,8 @@ export default function LoginScreen() {
           <TextInput
             onFocus={() => dispatch(loginForm.handleUsername(""))}
             style={LoginForm.input}
-            onChangeText={(text) =>
-              dispatch(loginForm.handleUsername("mechanic1"))
-            }
-            value="mechanic1"
+            onChangeText={(text) => dispatch(loginForm.handleUsername("shop"))}
+            value="shop"
           />
           {usernameError && (
             <Text style={{ color: "red" }}>{usernameError}</Text>

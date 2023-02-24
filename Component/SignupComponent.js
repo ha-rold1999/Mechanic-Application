@@ -16,8 +16,10 @@ import { useDispatch, useSelector } from "react-redux";
 import * as PersonalInfo from "../Redux/SignupFormReducers/PersonalInfoSlice";
 import * as LicenseInfoForm from "../Redux/SignupFormReducers/DriveerLicenseFormReducers";
 import * as CredentialForm from "../Redux/SignupFormReducers/AccountCredFormReducers";
+import * as ShopDetailForm from "../Redux/SignupFormReducers/ShopInfoFormSlice";
 import { useState } from "react";
 import SingnupConfirmation from "./Signup/ModalComponent/SignupConfirmationModal";
+import ShopInfo from "./Signup/ShopDetailsComponent";
 
 export default function SingupScreen({ navigation }) {
   const apiKey = "API_SECRET-42e016b219421dc83d180bdee27f81dd";
@@ -34,6 +36,8 @@ export default function SingupScreen({ navigation }) {
   const address = useSelector(PersonalInfo.address);
   const licenseNo = useSelector(LicenseInfoForm.licenseNo);
   const expiryDate = useSelector(LicenseInfoForm.licenseExpDate);
+  const shopName = useSelector(ShopDetailForm.shopName);
+  const shodDesc = useSelector(ShopDetailForm.shopDescription);
   const email = useSelector(CredentialForm.email);
   const username = useSelector(CredentialForm.username);
   const password = useSelector(CredentialForm.password);
@@ -48,6 +52,9 @@ export default function SingupScreen({ navigation }) {
 
   //Acount Credential Form Validation
   const formError = useSelector(CredentialForm.formError);
+
+  //Shop Information Form Validation
+  const shopInfoFormError = useSelector(ShopDetailForm.formError);
 
   const executePost = () => {
     checkForm(CredentialForm.checkCredForm("error"));
@@ -81,9 +88,8 @@ export default function SingupScreen({ navigation }) {
           },
           accountStatus: {
             Shop: {
-              ShopID: "",
-              ShopName: "This is a Test Mechanic",
-              ShopDescription: "Testing Testing",
+              ShopName: shopName,
+              ShopDescription: shodDesc,
             },
             Role: "MECHANIC",
           },
@@ -91,6 +97,7 @@ export default function SingupScreen({ navigation }) {
       })
         .then((res) => res.json())
         .then((response) => {
+          console.log(JSON.stringify(response, null, 2));
           if (response.Status == 409) {
             setIsError(true);
             setIsSuccess(false);
@@ -101,6 +108,8 @@ export default function SingupScreen({ navigation }) {
           setIsLoading(false);
         })
         .catch((error) => console.log(error));
+    } else {
+      setModalVisible(false);
     }
   };
 
@@ -147,6 +156,19 @@ export default function SingupScreen({ navigation }) {
             errors={licenseFormError}
           >
             <LicenseInfo />
+          </ProgressStep>
+
+          {/* Shop Information Component*/}
+          <ProgressStep
+            label="Shop Information"
+            nextBtnStyle={FormStyle.nextButton}
+            nextBtnTextStyle={FormStyle.nextButton}
+            previousBtnStyle={FormStyle.prevButton}
+            previousBtnTextStyle={FormStyle.prevButton}
+            onNext={() => checkForm(ShopDetailForm.checkShopForm("error"))}
+            errors={shopInfoFormError}
+          >
+            <ShopInfo />
           </ProgressStep>
 
           {/* Username and Password Component*/}

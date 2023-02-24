@@ -11,7 +11,10 @@ export default function InitialScreen({ navigation }) {
       end={{ x: 1, y: 1 }}
     >
       <View>
-        <Image source={require("../assets/Logo/Logo.png")} />
+        <Image
+          source={require("../assets/Logo/Logo.png")}
+          style={{ width: 400, height: 200, marginBottom: 10 }}
+        />
         <Pressable
           style={Styles.buttton}
           onPress={() => navigation.navigate("Login")}

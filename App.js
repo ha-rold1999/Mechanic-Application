@@ -2,11 +2,13 @@ import LaodingScreen from "./Component/LoadingComponent";
 import InitialScreen from "./Component/InitialComponent";
 import SingupScreen from "./Component/SignupComponent";
 import LoginScreen from "./Component/LoginComponent";
+import HomeComponent from "./Component/HomeComponen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Provider } from "react-redux";
 import store from "./Redux/Store";
+import "react-native-gesture-handler";
 
 export default function App() {
   /*
@@ -40,6 +42,11 @@ export default function App() {
           <Stack.Screen
             name="Login"
             component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeComponent}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
