@@ -4,7 +4,7 @@ import { fetchRequestList } from "../../../../../Redux/RequestListReducer/Reques
 import { useEffect } from "react";
 import RequestCard from "./RequestCard";
 
-export default function RequestList() {
+export default function RequestList({ navigation }) {
   const { UUID } = useSelector((state) => state.profileSlice);
   const dispatch = useDispatch();
 
@@ -22,7 +22,9 @@ export default function RequestList() {
       <Text>Request List Here</Text>
       <FlatList
         data={requestsDetails}
-        renderItem={(request) => <RequestCard details={request} />}
+        renderItem={(request) => (
+          <RequestCard details={request} navigation={navigation} />
+        )}
       />
     </View>
   );

@@ -1,8 +1,12 @@
 import { View, Text, Pressable } from "react-native";
 
-export default function RequestCard({ details }) {
+export default function RequestCard({ details, navigation }) {
   return (
-    <Pressable>
+    <Pressable
+      onPress={() =>
+        navigation.navigate("RequestDetails", { Details: details.item })
+      }
+    >
       <View
         style={{
           borderWidth: 1,
