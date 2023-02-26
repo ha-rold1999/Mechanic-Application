@@ -3,7 +3,7 @@ import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
 import { apiKey } from "../../../../../Static";
 
-export default function AddService({ route }) {
+export default function AddService({ navigation, route }) {
   const ShopData = route.params;
   const [serviceList, setServiceList] = useState([]);
   const [selectedValue, setSelectedValue] = useState("");
@@ -28,12 +28,12 @@ export default function AddService({ route }) {
   };
   const fetchAddThisService = async () => {
     try {
-      await fetch("http://203.177.71.218:5003/api/Mechanic/Shop", {
+      await fetch("http://203.177.71.218:5003/api/Mechanic/ServiceOffer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "AYUS-API-KEY": apiKey,
-          MechanicUUID: ShopData.ShopID,
+          MechanicUUID: ShopData.mechanicID,
         },
         body: JSON.stringify({
           serviceID: selectedValue,
@@ -42,10 +42,9 @@ export default function AddService({ route }) {
         }),
       })
         .then((res) => res.json())
-        .then((services) => console.log(services.Stataus))
-        .catch((error) => console.log(error));
+        .catch((error) => console.log("inside Error: " + error));
     } catch (error) {
-      console.log(error);
+      console.log("Outsinde Error: " + error);
     }
   };
 
@@ -59,10 +58,17 @@ export default function AddService({ route }) {
       <Text>Select Service To Offer</Text>
       <Picker
         selectedValue={selectedValue}
-        onValueChange={(itemValue) => setSelectedValue(itemValue)}
+        onValueChange={(itemValue) => {
+          console.log(selectedValue);
+          setSelectedValue(itemValue);
+        }}
       >
         {serviceList.map(({ ServiceName, ServiceID }) => (
-          <Picker.Item label={ServiceName} value={ServiceID} key={ServiceID} />
+          <Picker.Item
+            label={ServiceName}
+            value={ServiceName}
+            key={ServiceID}
+          />
         ))}
       </Picker>
       <Text>Enter Price</Text>
@@ -80,7 +86,13 @@ export default function AddService({ route }) {
           setServiceExperties(text);
         }}
       />
-      <Button title="Add Service" onPress={() => fetchAddThisService()} />
+      <Button
+        title="Add Service"
+        onPress={() => {
+          fetchAddThisService();
+          navigation.navigate("ShopDesc");
+        }}
+      />
     </View>
   );
 }

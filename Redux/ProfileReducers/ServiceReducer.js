@@ -6,7 +6,8 @@ export const serviceSlice = createSlice({
   initialState: { serviceLst: [], error: "" },
   reducers: {
     getService: (state, action) => {
-      state.serviceLst = action.payload.Shop.ServiceOffers;
+      state.serviceLst = action.payload.Info;
+      console.log(JSON.stringify(state.serviceLst, null, 2));
     },
     getServiceError: (state, action) => {
       state.error = action.payload;
@@ -19,7 +20,7 @@ export const serviceSliceReducer = serviceSlice.reducer;
 
 export const fetchService = (uuid) => async (dispatch) => {
   try {
-    await fetch("http://203.177.71.218:5003/api/Mechanic/Shop", {
+    await fetch("http://203.177.71.218:5003/api/Mechanic/ServiceOffer", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
