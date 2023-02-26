@@ -7,8 +7,8 @@ export default function HomeComponent() {
   const Drawer = createDrawerNavigator();
   return (
     <NavigationContainer independent={true}>
-      <Drawer.Navigator initialRouteName="Main">
-        <Drawer.Screen name="Main" component={Main} />
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={Main} />
         <Drawer.Screen name="Setting" component={Setting} />
       </Drawer.Navigator>
     </NavigationContainer>
