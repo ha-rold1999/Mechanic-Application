@@ -1,8 +1,8 @@
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import RequestList from "./Views/MainViews/RequestList";
 import Profile from "./Views/ProfileViews/ProfileView";
 import ShopStack from "./Views/ShopViews/ShopViewStack";
+import MainViewStack from "./Views/MainViews/MainViewStack";
 
 export default function Main() {
   const Tab = createBottomTabNavigator();
@@ -12,7 +12,7 @@ export default function Main() {
       initialRouteName="Request"
     >
       <Tab.Screen name="My Shop" component={ShopStack} />
-      <Tab.Screen name="Request" component={RequestList} />
+      <Tab.Screen name="Request" component={MainViewStack} />
       <Tab.Screen name="My Profile" component={Profile} />
     </Tab.Navigator>
   );
