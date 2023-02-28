@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiKey } from "../../Static";
+import { apiKey, server } from "../../Static";
 
 export const requestListSlice = createSlice({
   name: "requestListSlice",
@@ -17,7 +17,7 @@ export const requestListSliceReducer = requestListSlice.reducer;
 
 export const fetchRequestList = (UUID) => async (dispatch) => {
   try {
-    await fetch("http://203.177.71.218:5003/api/ServiceRequest", {
+    await fetch(`${server}/api/ServiceRequest`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,31 @@ export const fetchRequestList = (UUID) => async (dispatch) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => dispatch(getServiceRequest(data)))
+      .then((data) => {dispatch(getServiceRequest(data));})
+      .catch((error) => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchDeleteReq = (ReqUUID) => async (dispatch) => {
+  try {
+    await fetch(`${server}/api/ServiceRequest`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "AYUS-API-KEY": apiKey,
+        ServiceRequestUUID: ReqUUID,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) =>{
+        console.log(data.ServiceRequests.filter(s=>s.RequestID === ReqUUID)[0])
+        console.log(JSON.stringify({...data.Info, status:"declined"}));
+        fetch(`${server}/api/ServiceRequest`,{method:"PUT", headers: {
+        "Content-Type": "application/json",
+        "AYUS-API-KEY": apiKey,
+      },body: JSON.stringify({...data.ServiceRequests.filter(s=>s.RequestID === ReqUUID)[0], newstatus:"declined"})})})
       .catch((error) => console.log(error));
   } catch (error) {
     console.log(error);

@@ -1,7 +1,7 @@
 import { View, Text, TextInput, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
-import { apiKey } from "../../../../../Static";
+import { apiKey,server } from "../../../../../Static";
 
 export default function AddService({ navigation, route }) {
   const ShopData = route.params;
@@ -12,7 +12,7 @@ export default function AddService({ navigation, route }) {
 
   const fetchAllServices = async () => {
     try {
-      await fetch("http://203.177.71.218:5003/api/System/Service", {
+      await fetch(`${server}/api/System/Service`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export default function AddService({ navigation, route }) {
   };
   const fetchAddThisService = async () => {
     try {
-      await fetch("http://203.177.71.218:5003/api/Mechanic/ServiceOffer", {
+      await fetch(`${server}/api/Mechanic/ServiceOffer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

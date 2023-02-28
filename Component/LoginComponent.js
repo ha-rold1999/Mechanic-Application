@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as loginForm from "../Redux/LoginFormReducers/LoginReducers";
 import LoginModal from "./Signup/ModalComponent/LoginModal";
 import { getProfile } from "../Redux/ProfileReducers/ProfileReducer";
+import { server } from "../Static";
 
 export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export default function LoginScreen({ navigation }) {
     dispatch(loginForm.checkLoginForm("error"));
     if (!formError) {
       setModalVisible(true);
-      fetch("http://203.177.71.218:5003/api/Account", {
+      fetch(`${server}/api/Account`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -94,10 +95,9 @@ export default function LoginScreen({ navigation }) {
         <View style={LoginForm.inputView}>
           <Text style={LoginForm.label}>Username</Text>
           <TextInput
-            onFocus={() => dispatch(loginForm.handleUsername(""))}
             style={LoginForm.input}
-            onChangeText={(text) => dispatch(loginForm.handleUsername("shop"))}
-            value="shop"
+            onChangeText={(text) => dispatch(loginForm.handleUsername(text))}
+            
           />
           {usernameError && (
             <Text style={{ color: "red" }}>{usernameError}</Text>

@@ -17,11 +17,13 @@ export default function RequestList({ navigation }) {
 
   const { requestList } = useSelector((state) => state.requestListSlice);
   const requestsDetails = requestList.ServiceRequests;
+  const newFilterData = requestsDetails.filter(_s => _s.status === "declined")
+
   return (
     <View>
       <Text>Request List Here</Text>
       <FlatList
-        data={requestsDetails}
+        data={newFilterData}
         renderItem={(request) => (
           <RequestCard details={request} navigation={navigation} />
         )}

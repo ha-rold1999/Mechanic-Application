@@ -20,6 +20,7 @@ import * as ShopDetailForm from "../Redux/SignupFormReducers/ShopInfoFormSlice";
 import { useState } from "react";
 import SingnupConfirmation from "./Signup/ModalComponent/SignupConfirmationModal";
 import ShopInfo from "./Signup/ShopDetailsComponent";
+import { server } from "../Static";
 
 export default function SingupScreen({ navigation }) {
   const apiKey = "API_SECRET-42e016b219421dc83d180bdee27f81dd";
@@ -59,9 +60,8 @@ export default function SingupScreen({ navigation }) {
   const executePost = () => {
     checkForm(CredentialForm.checkCredForm("error"));
     if (!formError) {
-      console.log("fetch");
       setModalVisible(true);
-      fetch("http://203.177.71.218:5003/api/Account", {
+      fetch(`${server}/api/Account`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +97,6 @@ export default function SingupScreen({ navigation }) {
       })
         .then((res) => res.json())
         .then((response) => {
-          console.log(JSON.stringify(response, null, 2));
           if (response.Status == 409) {
             setIsError(true);
             setIsSuccess(false);
