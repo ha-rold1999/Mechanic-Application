@@ -7,6 +7,7 @@ import { shopDetailsSliceReducer } from "./SignupFormReducers/ShopInfoFormSlice"
 import { profileSliceReducers } from "./ProfileReducers/ProfileReducer";
 import { serviceSliceReducer } from "./ProfileReducers/ServiceReducer";
 import { requestListSliceReducer } from "./RequestListReducer/RequestListReducer";
+import { locationSliceReducer } from "./MapReducers/LocationReducers";
 
 export default configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export default configureStore({
     profileSlice: profileSliceReducers,
     serviceSlice: serviceSliceReducer,
     requestListSlice: requestListSliceReducer,
+    locationSlice:locationSliceReducer
   },
 });
