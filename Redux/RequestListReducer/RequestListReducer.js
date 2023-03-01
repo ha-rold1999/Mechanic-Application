@@ -45,8 +45,7 @@ export const fetchDeleteReq = (ReqUUID) => async (dispatch) => {
     })
       .then((res) => res.json())
       .then((data) =>{
-        console.log(data.ServiceRequests.filter(s=>s.RequestID === ReqUUID)[0])
-        console.log(JSON.stringify({...data.Info, status:"declined"}));
+        
         fetch(`${server}/api/ServiceRequest`,{method:"PUT", headers: {
         "Content-Type": "application/json",
         "AYUS-API-KEY": apiKey,
