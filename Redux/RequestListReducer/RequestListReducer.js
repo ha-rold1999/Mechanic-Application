@@ -26,7 +26,9 @@ export const fetchRequestList = (UUID) => async (dispatch) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => {dispatch(getServiceRequest(data));})
+      .then((data) => {
+        dispatch(getServiceRequest(data));
+      })
       .catch((error) => console.log(error));
   } catch (error) {
     console.log(error);
@@ -44,12 +46,46 @@ export const fetchDeleteReq = (ReqUUID) => async (dispatch) => {
       },
     })
       .then((res) => res.json())
-      .then((data) =>{
-        
-        fetch(`${server}/api/ServiceRequest`,{method:"PUT", headers: {
+      .then((data) => {
+        fetch(`${server}/api/ServiceRequest`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "AYUS-API-KEY": apiKey,
+          },
+          body: JSON.stringify({
+            ...data.ServiceRequests.filter((s) => s.RequestID === ReqUUID)[0],
+            newstatus: "declined",
+          }),
+        })
+          .then((res) => res.json())
+          .then((response) =>
+            console.log("Update: " + JSON.stringify(response, null, 2))
+          );
+      })
+      .catch((error) => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const acceptReq = (clientID, mechanicID, details) => async () => {
+  try {
+    await fetch(`${server}/api/Sessions/RegisterSession`, {
+      method: "POST",
+      headers: {
         "Content-Type": "application/json",
         "AYUS-API-KEY": apiKey,
-      },body: JSON.stringify({...data.ServiceRequests.filter(s=>s.RequestID === ReqUUID)[0], newstatus:"declined"})})})
+        ClientUUID: clientID, // [REQUIRED]
+        MechanicUUID: mechanicID, // [REQUIRED]
+        SessionDetails: details, // [REQUIRED]
+        Flag: "Accept Request",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(JSON.stringify(data, null, 2));
+      })
       .catch((error) => console.log(error));
   } catch (error) {
     console.log(error);
