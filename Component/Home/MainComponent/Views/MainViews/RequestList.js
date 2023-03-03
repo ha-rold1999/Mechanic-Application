@@ -3,12 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchRequestList } from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { useEffect, useState } from "react";
 import RequestCard from "./RequestCard";
+import MapLocation from "../../../MapComponent/MapView";
 
 export default function RequestList({ navigation }) {
   const { UUID } = useSelector((state) => state.profileSlice);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const { requestList } = useSelector((state) => state.requestListSlice);
+  const requestsDetails = requestList.ServiceRequests;
+
+  const { longitude } = useSelector((state) => state.locationSlice);
 
   useEffect(() => {
     const time = setInterval(() => {
@@ -18,20 +22,35 @@ export default function RequestList({ navigation }) {
     return () => clearInterval(time);
   }, [dispatch]);
 
-  if (!isLoading && requestList != undefined) {
-    const requestsDetails = requestList.ServiceRequests;
-    console.log("Hello " + JSON.stringify(requestsDetails, null, 2));
+  if (
+    !isLoading &&
+    requestList !== undefined &&
+    requestsDetails !== undefined &&
+    longitude !== ""
+  ) {
     const newFilterData = requestsDetails.filter(
-      (_s) => _s.status !== "declined"
+      (_s) => _s.Status !== "declined"
     );
-    return (
-      <FlatList
-        data={newFilterData}
-        renderItem={(request) => (
-          <RequestCard details={request} navigation={navigation} />
-        )}
-      />
-    );
+    if (newFilterData.length) {
+      return (
+        <>
+          <MapLocation />
+          <FlatList
+            data={newFilterData}
+            renderItem={(request) => (
+              <RequestCard details={request} navigation={navigation} />
+            )}
+          />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <MapLocation />
+          <Text>No Request as of the moment</Text>
+        </>
+      );
+    }
   }
 
   return (

@@ -8,6 +8,7 @@ import { profileSliceReducers } from "./ProfileReducers/ProfileReducer";
 import { serviceSliceReducer } from "./ProfileReducers/ServiceReducer";
 import { requestListSliceReducer } from "./RequestListReducer/RequestListReducer";
 import { locationSliceReducer } from "./MapReducers/LocationReducers";
+import { clientLocationSliceReducer } from "./MapReducers/ClientLocationReducer";
 
 export default configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export default configureStore({
     profileSlice: profileSliceReducers,
     serviceSlice: serviceSliceReducer,
     requestListSlice: requestListSliceReducer,
-    locationSlice:locationSliceReducer
+    locationSlice: locationSliceReducer,
+    clientLocationSlice: clientLocationSliceReducer,
   },
 });

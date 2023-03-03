@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { View, Text, Pressable, Button } from "react-native";
 import { useDispatch } from "react-redux";
 import {
   fetchDeleteReq,
   acceptReq,
 } from "../../../../../Redux/RequestListReducer/RequestListReducer";
+import { getClientLocation } from "../../../../../Redux/MapReducers/ClientLocationReducer";
+import CustomerLocation from "../../../MapComponent/CustomerLocation";
 
 export default function RequestDetails({ route }) {
   const Data = route.params;
@@ -21,24 +24,31 @@ export default function RequestDetails({ route }) {
 
   const details = `Service: ${serviceName} | Client: ${fName} | Contact: ${contact} | Location: ${location} | Vehicle: ${vehicle} | Description: ${description}`;
 
+  useEffect(() => {
+    dispatch(getClientLocation(clientID));
+  }, [dispatch]);
+
   return (
-    <View>
-      <Text>{mechanicID}</Text>
-      <Text>{clientID}</Text>
-      <Text>{fName}</Text>
-      <Text>{serviceName}</Text>
-      <Text>{contact}</Text>
-      <Text>{location}</Text>
-      <Text>{vehicle}</Text>
-      <Text>{description}</Text>
-      <Button
-        title="Decline"
-        onPress={() => dispatch(fetchDeleteReq(requestID))}
-      />
-      <Button
-        title="Accept"
-        onPress={() => dispatch(acceptReq(clientID, mechanicID, details))}
-      />
-    </View>
+    <>
+      <CustomerLocation />
+      <View>
+        <Text>{mechanicID}</Text>
+        <Text>{clientID}</Text>
+        <Text>{fName}</Text>
+        <Text>{serviceName}</Text>
+        <Text>{contact}</Text>
+        <Text>{location}</Text>
+        <Text>{vehicle}</Text>
+        <Text>{description}</Text>
+        <Button
+          title="Decline"
+          onPress={() => dispatch(fetchDeleteReq(mechanicID))}
+        />
+        <Button
+          title="Accept"
+          onPress={() => dispatch(acceptReq(clientID, mechanicID, details))}
+        />
+      </View>
+    </>
   );
 }

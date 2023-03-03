@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { BackHandler } from "react-native";
 import Main from "./Home/MainComponent/Main";
 import Setting from "./Home/SettingComponent/Setting";
+import ShowMaps from "./Home/MapComponent/Maps";
 
 import * as Location from "expo-location";
 import { useEffect } from "react";
@@ -30,7 +31,7 @@ export default function HomeComponent() {
           })
         );
       })();
-    }, 10000);
+    }, 1000);
   }, []);
 
   return (
@@ -38,6 +39,7 @@ export default function HomeComponent() {
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={Main} />
         <Drawer.Screen name="Setting" component={Setting} />
+        <Drawer.Screen name="Map" component={ShowMaps} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
