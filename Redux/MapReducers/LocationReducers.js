@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { server, apiKey } from "../../Static";
+import * as Location from "expo-location";
+
+import { BackHandler } from "react-native";
 
 export const locationSlice = createSlice({
   name: "locationSlice",
   initialState: { longitude: "", latitude: "", UUID: "" },
   reducers: {
-    getLocation: (state, action) => {
+    postLocation: (state, action) => {
       state.longitude = action.payload.longitude;
       state.latitude = action.payload.latitude;
       state.UUID = action.payload.UUID;
@@ -30,5 +33,25 @@ export const locationSlice = createSlice({
   },
 });
 
-export const { getLocation } = locationSlice.actions;
+export const { postLocation } = locationSlice.actions;
 export const locationSliceReducer = locationSlice.reducer;
+
+export const getCurrentLocation = (UUID) => (dispatch) => {
+  setInterval(() => {
+    const getLoc = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        BackHandler.exitApp();
+      }
+      let location = await Location.getCurrentPositionAsync();
+      dispatch(
+        postLocation({
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude,
+          UUID: UUID,
+        })
+      );
+    };
+    getLoc();
+  }, 10000);
+};
