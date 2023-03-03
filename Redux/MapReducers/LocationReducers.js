@@ -27,7 +27,6 @@ export const locationSlice = createSlice({
         }),
       })
         .then((res) => res.json())
-        .then((response) => console.log(JSON.stringify(response)))
         .catch((err) => console.log(err));
     },
   },

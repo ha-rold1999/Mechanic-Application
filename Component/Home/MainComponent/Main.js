@@ -8,9 +8,8 @@ export default function Main() {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="Request"
-      tabBarOptions={{
+      screenOptions={{
+        headerShown: false,
         showLabel: true,
         style: {
           position: "absolute",
@@ -24,6 +23,7 @@ export default function Main() {
           ...styles.shadow,
         },
       }}
+      initialRouteName="Request"
     >
       <Tab.Screen
         name="Request"
