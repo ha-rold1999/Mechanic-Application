@@ -35,33 +35,19 @@ export const fetchRequestList = (UUID) => async (dispatch) => {
   }
 };
 
-export const fetchDeleteReq = (ReqUUID) => async (dispatch) => {
+export const fetchDeleteReq = (clientID) => async (dispatch) => {
   try {
     await fetch(`${server}/api/ServiceRequest`, {
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         "AYUS-API-KEY": apiKey,
-        ServiceRequestUUID: ReqUUID,
+        ServiceRequestUUID: clientID,
       },
     })
       .then((res) => res.json())
       .then((data) => {
-        fetch(`${server}/api/ServiceRequest`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "AYUS-API-KEY": apiKey,
-          },
-          body: JSON.stringify({
-            ...data.ServiceRequests.filter((s) => s.RequestID === ReqUUID)[0],
-            newstatus: "declined",
-          }),
-        })
-          .then((res) => res.json())
-          .then((response) =>
-            console.log("Update: " + JSON.stringify(response, null, 2))
-          );
+        console.log(JSON.stringify(data, null, 2));
       })
       .catch((error) => console.log(error));
   } catch (error) {

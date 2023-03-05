@@ -8,7 +8,7 @@ import {
 import { getClientLocation } from "../../../../../Redux/MapReducers/ClientLocationReducer";
 import CustomerLocation from "../../../MapComponent/CustomerLocation";
 
-export default function RequestDetails({ route }) {
+export default function RequestDetails({ route, navigation }) {
   const Data = route.params;
   const mechanicID = Data.Details.Recepient;
   const clientID = Data.Details.Requestor;
@@ -46,7 +46,13 @@ export default function RequestDetails({ route }) {
             <Button
               color={"red"}
               title="Decline"
-              onPress={() => dispatch(fetchDeleteReq(mechanicID))}
+              onPress={() => {
+                dispatch(fetchDeleteReq(requestID));
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "RequestList" }],
+                });
+              }}
             />
           </View>
           <View style={{ ...styles.paddingButton }}>

@@ -28,15 +28,12 @@ export default function RequestList({ navigation }) {
     requestsDetails !== undefined &&
     longitude !== ""
   ) {
-    const newFilterData = requestsDetails.filter(
-      (_s) => _s.Status !== "declined"
-    );
-    if (newFilterData.length) {
+    if (requestsDetails.length) {
       return (
         <>
           <MapLocation />
           <FlatList
-            data={newFilterData}
+            data={requestsDetails}
             renderItem={(request) => (
               <RequestCard details={request} navigation={navigation} />
             )}
