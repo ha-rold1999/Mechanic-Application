@@ -31,6 +31,8 @@ export default function LoginScreen({ navigation }) {
     dispatch(loginForm.checkLoginForm("error"));
     if (!formError) {
       setModalVisible(true);
+      console.log(`${server}/api/Account`);
+      console.log(username, password);
       fetch(`${server}/api/Account`, {
         method: "GET",
         headers: {
@@ -97,7 +99,6 @@ export default function LoginScreen({ navigation }) {
           <TextInput
             style={LoginForm.input}
             onChangeText={(text) => dispatch(loginForm.handleUsername(text))}
-            
           />
           {usernameError && (
             <Text style={{ color: "red" }}>{usernameError}</Text>
