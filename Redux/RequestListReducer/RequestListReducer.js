@@ -3,15 +3,19 @@ import { apiKey, server } from "../../Static";
 
 export const requestListSlice = createSlice({
   name: "requestListSlice",
-  initialState: { requestList: [] },
+  initialState: { requestList: [], inSession: false, sessionDetails: null },
   reducers: {
     getServiceRequest: (state, action) => {
       state.requestList = action.payload;
     },
+    setInSession: (state, action) => {
+      state.inSession = action.payload.inSession;
+      state.sessionDetails = action.payload.info;
+    },
   },
 });
 
-export const { getServiceRequest } = requestListSlice.actions;
+export const { getServiceRequest, setInSession } = requestListSlice.actions;
 export const requestList = (state) => state.requestList;
 export const requestListSliceReducer = requestListSlice.reducer;
 
@@ -28,6 +32,30 @@ export const fetchRequestList = (UUID) => async (dispatch) => {
       .then((res) => res.json())
       .then((data) => {
         dispatch(getServiceRequest(data));
+      })
+      .catch((error) => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const checkSession = (UUID) => async (dispatch) => {
+  try {
+    await fetch(`${server}/api/Sessions/GetSession`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "AYUS-API-KEY": apiKey,
+        MechanicUUID: UUID,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.Status === 200) {
+          dispatch(setInSession({ inSession: true, info: data }));
+        } else {
+          dispatch(setInSession({ inSession: false, info: null }));
+        }
       })
       .catch((error) => console.log(error));
   } catch (error) {
@@ -56,6 +84,7 @@ export const fetchDeleteReq = (clientID) => async (dispatch) => {
 };
 
 export const acceptReq = (clientID, mechanicID, details) => async () => {
+  fetchDeleteReq(clientID);
   try {
     await fetch(`${server}/api/Sessions/RegisterSession`, {
       method: "POST",
