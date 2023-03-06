@@ -1,15 +1,21 @@
 import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRequestList } from "../../../../../Redux/RequestListReducer/RequestListReducer";
+import {
+  fetchRequestList,
+  checkSession,
+} from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { useEffect, useState } from "react";
 import RequestCard from "./RequestCard";
 import MapLocation from "../../../MapComponent/MapView";
+import InSessionDetails from "./InSessionDetails";
 
 export default function RequestList({ navigation }) {
   const { UUID } = useSelector((state) => state.profileSlice);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const { requestList } = useSelector((state) => state.requestListSlice);
+  const { requestList, inSession } = useSelector(
+    (state) => state.requestListSlice
+  );
   const requestsDetails = requestList.ServiceRequests;
 
   const { longitude } = useSelector((state) => state.locationSlice);
@@ -17,6 +23,7 @@ export default function RequestList({ navigation }) {
   useEffect(() => {
     const time = setInterval(() => {
       dispatch(fetchRequestList(UUID));
+      dispatch(checkSession(UUID));
       setIsLoading(false);
     }, 5000);
     return () => clearInterval(time);
@@ -28,15 +35,18 @@ export default function RequestList({ navigation }) {
     requestsDetails !== undefined &&
     longitude !== ""
   ) {
-    const newFilterData = requestsDetails.filter(
-      (_s) => _s.Status !== "declined"
-    );
-    if (newFilterData.length) {
+    if (inSession) {
+      return (
+        <>
+          <InSessionDetails />
+        </>
+      );
+    } else if (requestsDetails.length) {
       return (
         <>
           <MapLocation />
           <FlatList
-            data={newFilterData}
+            data={requestsDetails}
             renderItem={(request) => (
               <RequestCard details={request} navigation={navigation} />
             )}
