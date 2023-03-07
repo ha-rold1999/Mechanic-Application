@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { apiKey, server } from "../../Static";
 
 export const profileSlice = createSlice({
   name: "profileSlice",
@@ -44,3 +45,22 @@ export const profileSlice = createSlice({
 
 export const { getProfile } = profileSlice.actions;
 export const profileSliceReducers = profileSlice.reducer;
+
+export const deleteAccount = (UUID) => () => {
+  try {
+    fetch(`${server}/api/Account`, {
+      method: "DELETE",
+      headers: {
+        "AYUS-API-KEY": apiKey,
+        uuid: UUID,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(JSON.stringify(data, null, 2));
+      })
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+  }
+};

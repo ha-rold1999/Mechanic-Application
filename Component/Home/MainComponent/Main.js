@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Profile from "./Views/ProfileViews/ProfileView";
 import ShopStack from "./Views/ShopViews/ShopViewStack";
 import MainViewStack from "./Views/MainViews/MainViewStack";
+import ProfileStack from "./Views/ProfileViews/ProfileStack";
 
 export default function Main() {
   const Tab = createBottomTabNavigator();
@@ -72,7 +73,7 @@ export default function Main() {
       />
       <Tab.Screen
         name="My Profile"
-        component={Profile}
+        component={ProfileStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
