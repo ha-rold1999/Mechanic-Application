@@ -13,17 +13,19 @@ export default function RequestDetails({ route, navigation }) {
   const mechanicID = Data.Details.Recepient;
   const clientID = Data.Details.Requestor;
   const requestID = Data.Details.RequestID;
-  const serviceName = Data.Details.ServiceName;
+  const serviceName = Data.Details.Service;
   const fName = Data.Details.FullName;
   const contact = Data.Details.Contact;
   const location = Data.Details.Location;
   const vehicle = Data.Details.Vehicle;
   const description = Data.Details.Description;
 
+  console.log("Request Details: " + JSON.stringify(Data.Details, null, 2));
   const dispatch = useDispatch();
 
   const details = `Service: ${serviceName} | Client: ${fName} | Contact: ${contact} | Location: ${location} | Vehicle: ${vehicle} | Description: ${description}`;
 
+  console.log(serviceName);
   useEffect(() => {
     dispatch(getClientLocation(clientID));
   }, [dispatch]);
@@ -58,7 +60,10 @@ export default function RequestDetails({ route, navigation }) {
           <View style={{ ...styles.paddingButton }}>
             <Button
               title="Accept"
-              onPress={() => dispatch(acceptReq(clientID, mechanicID, details))}
+              onPress={() => {
+                dispatch(acceptReq(clientID, mechanicID, details));
+                dispatch(fetchDeleteReq(requestID));
+              }}
             />
           </View>
         </View>

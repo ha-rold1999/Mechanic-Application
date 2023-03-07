@@ -38,8 +38,8 @@ export default function SessionMap({ SessionID, SessionDetails }) {
           style={styles.map}
           provider="google"
           initialRegion={{
-            longitude: longitude,
-            latitude: latitude,
+            longitude: sessionMap.ClientLocLon,
+            latitude: sessionMap.ClientLocLat,
             latitudeDelta: 0.05,
             longitudeDelta: 0.05,
           }}

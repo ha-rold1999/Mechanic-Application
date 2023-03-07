@@ -84,7 +84,6 @@ export const fetchDeleteReq = (clientID) => async (dispatch) => {
 };
 
 export const acceptReq = (clientID, mechanicID, details) => async () => {
-  fetchDeleteReq(clientID);
   try {
     await fetch(`${server}/api/Sessions/RegisterSession`, {
       method: "POST",
