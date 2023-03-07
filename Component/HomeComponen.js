@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Main from "./Home/MainComponent/Main";
 import Setting from "./Home/SettingComponent/Setting";
 import ShowMaps from "./Home/MapComponent/Maps";
-
+import LogoutView from "./Home/LogoutComponent/LogoutView";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentLocation } from "../Redux/MapReducers/LocationReducers";
@@ -18,12 +18,11 @@ export default function HomeComponent() {
   }, []);
 
   return (
-    <NavigationContainer independent={true}>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={Main} />
-        <Drawer.Screen name="Setting" component={Setting} />
-        <Drawer.Screen name="Map" component={ShowMaps} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen name="Home" component={Main} />
+      <Drawer.Screen name="Setting" component={Setting} />
+      <Drawer.Screen name="Map" component={ShowMaps} />
+      <Drawer.Screen name="Logout" component={LogoutView} />
+    </Drawer.Navigator>
   );
 }
