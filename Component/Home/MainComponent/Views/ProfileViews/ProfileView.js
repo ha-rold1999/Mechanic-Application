@@ -10,6 +10,12 @@ export default function Profile({ navigation }) {
       <Text>Longitude: {longitude}</Text>
       <Text>Latitude: {latitude}</Text>
       <Button
+        title="Change Password"
+        onPress={() => {
+          navigation.navigate("ChangePass");
+        }}
+      />
+      <Button
         title="Delete Account"
         onPress={() => {
           navigation.navigate("Delete");
