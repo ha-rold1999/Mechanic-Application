@@ -66,7 +66,6 @@ export const deleteAccount = (UUID) => () => {
 };
 
 export const changePassword = (UUID, NewPassword) => () => {
-  console.log("Change Password");
   try {
     fetch(`${server}/api/Account/Password?uuid=${UUID}`, {
       method: "PUT",
@@ -84,3 +83,31 @@ export const changePassword = (UUID, NewPassword) => () => {
     console.log(error);
   }
 };
+
+export const changeInfo =
+  (UUID, Firstname, Lastname, Contact, Birthdate, Address, License, Expiry) =>
+  () => {
+    try {
+      fetch(`${server}/api/Account/PersonalInformation`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "AYUS-API-KEY": apiKey,
+        },
+        body: JSON.stringify({
+          UUID: UUID,
+          Firstname: Firstname,
+          Lastname: Lastname,
+          Contact: Contact,
+          Birthdate: Birthdate,
+          Address: Address,
+          LicenseNumber: License,
+          Expiry: new Date(Date.parse(Expiry)),
+        }),
+      })
+        .then((res) => res.json())
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+    }
+  };
