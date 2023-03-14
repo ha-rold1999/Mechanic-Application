@@ -9,13 +9,21 @@ export const requestListSlice = createSlice({
       state.requestList = action.payload;
     },
     setInSession: (state, action) => {
-      state.inSession = action.payload.inSession;
-      state.sessionDetails = action.payload.info;
+      if (action.payload.inSession) {
+        state.inSession = action.payload.inSession;
+        state.sessionDetails = action.payload.info;
+      } else {
+        state.inSession = action.payload.inSession;
+      }
+    },
+    clearSessionDetails: (state, action) => {
+      state.sessionDetails = action.payload;
     },
   },
 });
 
-export const { getServiceRequest, setInSession } = requestListSlice.actions;
+export const { getServiceRequest, setInSession, clearSessionDetails } =
+  requestListSlice.actions;
 export const requestList = (state) => state.requestList;
 export const requestListSliceReducer = requestListSlice.reducer;
 

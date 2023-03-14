@@ -13,7 +13,7 @@ export default function RequestList({ navigation }) {
   const { UUID } = useSelector((state) => state.profileSlice);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const { requestList, inSession } = useSelector(
+  const { requestList, inSession, sessionDetails } = useSelector(
     (state) => state.requestListSlice
   );
   const requestsDetails = requestList.ServiceRequests;
@@ -36,6 +36,12 @@ export default function RequestList({ navigation }) {
     longitude !== ""
   ) {
     if (inSession) {
+      return (
+        <>
+          <InSessionDetails />
+        </>
+      );
+    } else if (sessionDetails !== null) {
       return (
         <>
           <InSessionDetails />
