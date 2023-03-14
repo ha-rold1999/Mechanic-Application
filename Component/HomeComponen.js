@@ -7,6 +7,7 @@ import LogoutView from "./Home/LogoutComponent/LogoutView";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentLocation } from "../Redux/MapReducers/LocationReducers";
+import WalletStack from "./Home/WalletComponent/WalletStack";
 
 export default function HomeComponent() {
   const { UUID } = useSelector((state) => state.profileSlice);
@@ -23,6 +24,7 @@ export default function HomeComponent() {
       <Drawer.Screen name="Setting" component={Setting} />
       <Drawer.Screen name="Map" component={ShowMaps} />
       <Drawer.Screen name="Logout" component={LogoutView} />
+      <Drawer.Screen name="WalletStack" component={WalletStack} />
     </Drawer.Navigator>
   );
 }
