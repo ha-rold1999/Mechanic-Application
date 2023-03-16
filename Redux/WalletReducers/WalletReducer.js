@@ -20,7 +20,6 @@ export const { getWallet, setWallet } = walletSlice.actions;
 export const walletSliceReducer = walletSlice.reducer;
 
 export const getUserWallet = (UUID, setIsLoading) => (dispatch) => {
-  console.log("Debugging: " + UUID);
   try {
     fetch(`${server}/api/Wallet?uuid=${UUID}`, {
       method: "GET",

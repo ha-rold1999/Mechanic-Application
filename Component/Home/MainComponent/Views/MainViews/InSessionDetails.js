@@ -4,6 +4,7 @@ import SessionMap from "../../../MapComponent/SessionMap";
 import { clearSessionDetails } from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { addBalance } from "../../../../../Redux/WalletReducers/WalletReducer";
+import { postBilling } from "../../../../../Redux/BillingReducers/BillingReducers";
 
 export default function InSessionDetails() {
   const dispatch = useDispatch();
@@ -14,8 +15,7 @@ export default function InSessionDetails() {
   useEffect(() => {}, [inSession]);
 
   const { balance } = useSelector((state) => state.walletSlice);
-  const { UUID } = useSelector((state) => state.profileSlice);
-  console.log("UUID: " + UUID);
+  const { UUID, ShopID } = useSelector((state) => state.profileSlice);
 
   if (inSession && sessionDetails !== null) {
     return (
@@ -32,6 +32,7 @@ export default function InSessionDetails() {
       sessionDetails.foundData.SessionData.SessionDetails.split("|");
     const serviceDetails = datas[0].split(":");
     const servicePrice = serviceDetails[2];
+    const serviceName = serviceDetails[1];
     return (
       <View>
         <Text>Session Ended</Text>
@@ -41,7 +42,16 @@ export default function InSessionDetails() {
           title="OK"
           onPress={() => {
             dispatch(clearSessionDetails(null));
-            const newBal = parseFloat(balance) + parseFloat(servicePrice);
+            dispatch(
+              postBilling(
+                ShopID,
+                servicePrice,
+                serviceName,
+                sessionDetails.foundData.SessionData.SessionDetails
+              )
+            );
+            const newBal =
+              parseFloat(balance) + (parseFloat(servicePrice) - 25);
             dispatch(addBalance(UUID, newBal));
           }}
         />

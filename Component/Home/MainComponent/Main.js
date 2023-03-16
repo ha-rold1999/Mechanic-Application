@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Profile from "./Views/ProfileViews/ProfileView";
 import ShopStack from "./Views/ShopViews/ShopViewStack";
 import MainViewStack from "./Views/MainViews/MainViewStack";
 import ProfileStack from "./Views/ProfileViews/ProfileStack";
+import BillingStack from "./Views/BilllingViews/BillingStack";
 
 export default function Main() {
   const Tab = createBottomTabNavigator();
@@ -57,8 +57,8 @@ export default function Main() {
         }}
       />
       <Tab.Screen
-        name="History"
-        component={ShopStack}
+        name="Billing"
+        component={BillingStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
