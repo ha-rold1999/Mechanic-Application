@@ -1,12 +1,22 @@
 import { useEffect } from "react";
-import { View, Text, Pressable, Button, StyleSheet, Image } from "react-native";
-import { useDispatch } from "react-redux";
+import {
+  View,
+  Text,
+  Pressable,
+  Button,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchDeleteReq,
   acceptReq,
 } from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { getClientLocation } from "../../../../../Redux/MapReducers/ClientLocationReducer";
 import CustomerLocation from "../../../MapComponent/CustomerLocation";
+import { getReview } from "../../../../../Redux/RequestListReducer/RequestListReducer";
+import { AirbnbRating } from "react-native-ratings";
 
 export default function RequestDetails({ route, navigation }) {
   const Data = route.params;
@@ -24,51 +34,64 @@ export default function RequestDetails({ route, navigation }) {
   const dispatch = useDispatch();
 
   const details = `Service: ${serviceName} | Client: ${fName} | Contact: ${contact} | Location: ${location} | Vehicle: ${vehicle} | Description: ${description}`;
+  const { rating } = useSelector((state) => state.requestListSlice);
 
   console.log(serviceName);
   useEffect(() => {
     dispatch(getClientLocation(clientID));
+    dispatch(getReview(clientID, "Client"));
   }, [dispatch]);
 
-  return (
-    <>
-      <CustomerLocation />
-      <View style={{ ...styles.container }}>
-        <Text style={{ textAlign: "center", padding: 10, fontSize: 20 }}>
-          Service Request
-        </Text>
-        <View style={{ ...styles.requestDetails, ...styles.shadow }}>
-          <Text style={{ ...styles.fields }}>Requestor: {fName}</Text>
-          <Text style={{ ...styles.fields }}>Service: {serviceName}</Text>
-          <Text style={{ ...styles.fields }}>Contact: {contact}</Text>
-          <Text style={{ ...styles.fields }}>Location: {location}</Text>
-          <Text style={{ ...styles.fields }}>Vehicle: {vehicle}</Text>
-          <Text style={{ ...styles.fields }}>Information: {description}</Text>
-          <View style={{ ...styles.paddingButton }}>
-            <Button
-              color={"red"}
-              title="Decline"
-              onPress={() => {
-                dispatch(fetchDeleteReq(requestID));
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: "RequestList" }],
-                });
-              }}
-            />
-          </View>
-          <View style={{ ...styles.paddingButton }}>
-            <Button
-              title="Accept"
-              onPress={() => {
-                dispatch(acceptReq(clientID, mechanicID, details));
-                dispatch(fetchDeleteReq(requestID));
-              }}
-            />
+  if (rating !== null) {
+    return (
+      <>
+        <CustomerLocation />
+        <View style={{ ...styles.container }}>
+          <Text style={{ textAlign: "center", padding: 10, fontSize: 20 }}>
+            Service Request
+          </Text>
+          <View style={{ ...styles.requestDetails, ...styles.shadow }}>
+            <Text style={{ ...styles.fields }}>Requestor: {fName}</Text>
+            <Text style={{ ...styles.fields }}>
+              Rating: <AirbnbRating defaultRating={rating.Rating} isDisabled />
+            </Text>
+            <Text style={{ ...styles.fields }}>Service: {serviceName}</Text>
+            <Text style={{ ...styles.fields }}>Contact: {contact}</Text>
+            <Text style={{ ...styles.fields }}>Location: {location}</Text>
+            <Text style={{ ...styles.fields }}>Vehicle: {vehicle}</Text>
+            <Text style={{ ...styles.fields }}>Information: {description}</Text>
+            <View style={{ ...styles.paddingButton }}>
+              <Button
+                color={"red"}
+                title="Decline"
+                onPress={() => {
+                  dispatch(fetchDeleteReq(requestID));
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: "RequestList" }],
+                  });
+                }}
+              />
+            </View>
+            <View style={{ ...styles.paddingButton }}>
+              <Button
+                title="Accept"
+                onPress={() => {
+                  dispatch(acceptReq(clientID, mechanicID, details, dispatch));
+                  dispatch(fetchDeleteReq(requestID));
+                }}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    </>
+      </>
+    );
+  }
+
+  return (
+    <View>
+      <ActivityIndicator />
+    </View>
   );
 }
 

@@ -1,16 +1,18 @@
 import { Button, StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SessionMap from "../../../MapComponent/SessionMap";
 import { clearSessionDetails } from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { addBalance } from "../../../../../Redux/WalletReducers/WalletReducer";
 import { postBilling } from "../../../../../Redux/BillingReducers/BillingReducers";
+import ReviewModal from "./ReviewModal";
 
 export default function InSessionDetails() {
   const dispatch = useDispatch();
   const { sessionDetails, inSession } = useSelector(
     (state) => state.requestListSlice
   );
+  const [isRating, setIsRating] = useState(false);
 
   useEffect(() => {}, [inSession]);
 
@@ -37,7 +39,12 @@ export default function InSessionDetails() {
       <View>
         <Text>Session Ended</Text>
         <Text>{sessionDetails.foundData.SessionData.SessionDetails}</Text>
-        <Button title="Rate Client?" />
+        <Button
+          title="Rate Client?"
+          onPress={() => {
+            setIsRating(true);
+          }}
+        />
         <Button
           title="OK"
           onPress={() => {
@@ -55,6 +62,7 @@ export default function InSessionDetails() {
             dispatch(addBalance(UUID, newBal));
           }}
         />
+        <ReviewModal modalVisible={isRating} setModalVisible={setIsRating} />
       </View>
     );
   }

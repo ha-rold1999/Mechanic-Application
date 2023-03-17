@@ -3,7 +3,14 @@ import { apiKey, server } from "../../Static";
 
 export const requestListSlice = createSlice({
   name: "requestListSlice",
-  initialState: { requestList: [], inSession: false, sessionDetails: null },
+  initialState: {
+    requestList: [],
+    inSession: false,
+    sessionDetails: null,
+    rating: null,
+    myRating: null,
+    clienID: null,
+  },
   reducers: {
     getServiceRequest: (state, action) => {
       state.requestList = action.payload;
@@ -19,11 +26,26 @@ export const requestListSlice = createSlice({
     clearSessionDetails: (state, action) => {
       state.sessionDetails = action.payload;
     },
+    setRating: (state, action) => {
+      state.rating = action.payload;
+    },
+    setMyRating: (state, action) => {
+      state.myRating = action.payload;
+    },
+    setClientID: (state, action) => {
+      state.clienID = action.payload;
+    },
   },
 });
 
-export const { getServiceRequest, setInSession, clearSessionDetails } =
-  requestListSlice.actions;
+export const {
+  getServiceRequest,
+  setInSession,
+  clearSessionDetails,
+  setRating,
+  setMyRating,
+  setClientID,
+} = requestListSlice.actions;
 export const requestList = (state) => state.requestList;
 export const requestListSliceReducer = requestListSlice.reducer;
 
@@ -91,22 +113,71 @@ export const fetchDeleteReq = (clientID) => async (dispatch) => {
   }
 };
 
-export const acceptReq = (clientID, mechanicID, details) => async () => {
+export const acceptReq =
+  (clientID, mechanicID, details, dispatch) => async () => {
+    try {
+      await fetch(`${server}/api/Sessions/RegisterSession`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "AYUS-API-KEY": apiKey,
+          ClientUUID: clientID, // [REQUIRED]
+          MechanicUUID: mechanicID, // [REQUIRED]
+          SessionDetails: details, // [REQUIRED]
+          Flag: "Accept Request",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(JSON.stringify(data, null, 2));
+          dispatch(setClientID(clientID));
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const postReview = (mechID, rating) => () => {
   try {
-    await fetch(`${server}/api/Sessions/RegisterSession`, {
-      method: "POST",
+    fetch(`${server}/api/Account/Rating`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "AYUS-API-KEY": apiKey,
-        ClientUUID: clientID, // [REQUIRED]
-        MechanicUUID: mechanicID, // [REQUIRED]
-        SessionDetails: details, // [REQUIRED]
-        Flag: "Accept Request",
+        uuid: mechID,
+      },
+      body: JSON.stringify({
+        Rating: rating,
+      }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        console.log("Rating Response: " + JSON.stringify(response, null, 2));
+      })
+      .catch((error) => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getReview = (uuid, active) => (dispatch) => {
+  try {
+    fetch(`${server}/api/Account/Rating`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "AYUS-API-KEY": apiKey,
+        uuid: uuid,
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(JSON.stringify(data, null, 2));
+      .then((response) => {
+        if (active === "Profile") {
+          dispatch(setMyRating(response));
+        } else {
+          dispatch(setRating(response));
+        }
       })
       .catch((error) => console.log(error));
   } catch (error) {
