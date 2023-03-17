@@ -77,7 +77,7 @@ export default function RequestDetails({ route, navigation }) {
               <Button
                 title="Accept"
                 onPress={() => {
-                  dispatch(acceptReq(clientID, mechanicID, details));
+                  dispatch(acceptReq(clientID, mechanicID, details, dispatch));
                   dispatch(fetchDeleteReq(requestID));
                 }}
               />

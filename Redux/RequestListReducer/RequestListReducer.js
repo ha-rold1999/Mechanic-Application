@@ -9,6 +9,7 @@ export const requestListSlice = createSlice({
     sessionDetails: null,
     rating: null,
     myRating: null,
+    clienID: null,
   },
   reducers: {
     getServiceRequest: (state, action) => {
@@ -31,6 +32,9 @@ export const requestListSlice = createSlice({
     setMyRating: (state, action) => {
       state.myRating = action.payload;
     },
+    setClientID: (state, action) => {
+      state.clienID = action.payload;
+    },
   },
 });
 
@@ -40,6 +44,7 @@ export const {
   clearSessionDetails,
   setRating,
   setMyRating,
+  setClientID,
 } = requestListSlice.actions;
 export const requestList = (state) => state.requestList;
 export const requestListSliceReducer = requestListSlice.reducer;
@@ -108,28 +113,30 @@ export const fetchDeleteReq = (clientID) => async (dispatch) => {
   }
 };
 
-export const acceptReq = (clientID, mechanicID, details) => async () => {
-  try {
-    await fetch(`${server}/api/Sessions/RegisterSession`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "AYUS-API-KEY": apiKey,
-        ClientUUID: clientID, // [REQUIRED]
-        MechanicUUID: mechanicID, // [REQUIRED]
-        SessionDetails: details, // [REQUIRED]
-        Flag: "Accept Request",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(JSON.stringify(data, null, 2));
+export const acceptReq =
+  (clientID, mechanicID, details, dispatch) => async () => {
+    try {
+      await fetch(`${server}/api/Sessions/RegisterSession`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "AYUS-API-KEY": apiKey,
+          ClientUUID: clientID, // [REQUIRED]
+          MechanicUUID: mechanicID, // [REQUIRED]
+          SessionDetails: details, // [REQUIRED]
+          Flag: "Accept Request",
+        },
       })
-      .catch((error) => console.log(error));
-  } catch (error) {
-    console.log(error);
-  }
-};
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(JSON.stringify(data, null, 2));
+          dispatch(setClientID(clientID));
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const postReview = (mechID, rating) => () => {
   try {
