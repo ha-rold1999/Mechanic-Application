@@ -3,7 +3,13 @@ import { apiKey, server } from "../../Static";
 
 export const requestListSlice = createSlice({
   name: "requestListSlice",
-  initialState: { requestList: [], inSession: false, sessionDetails: null },
+  initialState: {
+    requestList: [],
+    inSession: false,
+    sessionDetails: null,
+    rating: null,
+    myRating: null,
+  },
   reducers: {
     getServiceRequest: (state, action) => {
       state.requestList = action.payload;
@@ -19,11 +25,22 @@ export const requestListSlice = createSlice({
     clearSessionDetails: (state, action) => {
       state.sessionDetails = action.payload;
     },
+    setRating: (state, action) => {
+      state.rating = action.payload;
+    },
+    setMyRating: (state, action) => {
+      state.myRating = action.payload;
+    },
   },
 });
 
-export const { getServiceRequest, setInSession, clearSessionDetails } =
-  requestListSlice.actions;
+export const {
+  getServiceRequest,
+  setInSession,
+  clearSessionDetails,
+  setRating,
+  setMyRating,
+} = requestListSlice.actions;
 export const requestList = (state) => state.requestList;
 export const requestListSliceReducer = requestListSlice.reducer;
 
@@ -107,6 +124,53 @@ export const acceptReq = (clientID, mechanicID, details) => async () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(JSON.stringify(data, null, 2));
+      })
+      .catch((error) => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postReview = (mechID, rating) => () => {
+  try {
+    fetch(`${server}/api/Account/Rating`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "AYUS-API-KEY": apiKey,
+        uuid: mechID,
+      },
+      body: JSON.stringify({
+        Rating: rating,
+      }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        console.log("Rating Response: " + JSON.stringify(response, null, 2));
+      })
+      .catch((error) => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getReview = (uuid, active) => (dispatch) => {
+  try {
+    fetch(`${server}/api/Account/Rating`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "AYUS-API-KEY": apiKey,
+        uuid: uuid,
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        if (active === "Profile") {
+          dispatch(setMyRating(response));
+        } else {
+          dispatch(setRating(response));
+        }
       })
       .catch((error) => console.log(error));
   } catch (error) {
