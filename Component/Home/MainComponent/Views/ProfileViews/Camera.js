@@ -2,9 +2,11 @@ import { StyleSheet, Text, View, Modal, Button, Image } from "react-native";
 import React from "react";
 import { Camera } from "expo-camera";
 import { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfilePic } from "../../../../../Redux/ProfileReducers/ProfileReducer";
 
 export default function PhoneCamera(props) {
+  const dispatch = useDispatch();
   const [hasPermission, setHasPermission] = useState(null);
   const [image, setImage] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -26,12 +28,14 @@ export default function PhoneCamera(props) {
         const options = { format: "png" };
         const data = await cameraRef.current.takePictureAsync(options);
         setImage(data.uri);
+        dispatch(getProfilePic(data.uri));
       } catch (error) {
         console.log(error);
       }
     }
   };
 
+  console.log(UUID);
   return (
     <Modal animationType="slide" transparent={true} visible={props.openCamera}>
       <Button
@@ -68,7 +72,7 @@ export default function PhoneCamera(props) {
                     method: "POST",
                     headers: {
                       UserID: UUID,
-                      Filename: "TEST",
+                      Filename: "PROFILE",
                     },
                     body: formData,
                   })

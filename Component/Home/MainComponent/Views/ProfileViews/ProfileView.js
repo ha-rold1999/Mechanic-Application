@@ -3,8 +3,8 @@ import { View, Text, Button, ActivityIndicator, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getReview } from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { AirbnbRating } from "react-native-ratings";
-import { profilePIc } from "../../../../../Redux/ProfileReducers/ProfileReducer";
 import PhoneCamera from "./Camera";
+import { server } from "../../../../../Static";
 
 export default function Profile({ navigation }) {
   const [openCamera, setOpenCamera] = useState(false);
@@ -14,23 +14,18 @@ export default function Profile({ navigation }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getReview(UUID, "Profile"));
-    dispatch(profilePIc(UUID, dispatch));
   }, []);
+  const image = `${server}/api/Upload/files/${UUID}/PROFILE`;
   if (myRating !== null) {
     return (
       <View>
         <View style={{ backgroundColor: "red", width: "50%", height: "30%" }}>
-          {Profile === null ? (
-            <Image
-              source={require("../../../../../assets/Icons/pp.jpg")}
-              style={{ width: "100%", height: "100%" }}
-            />
-          ) : (
-            <Image
-              source={{ uri: `data:image/jpg;base64,${Profile}` }}
-              style={{ width: "100%", height: "100%" }}
-            />
-          )}
+          <Image
+            source={{
+              uri: image + "?" + new Date(),
+            }}
+            style={{ width: "100%", height: "100%" }}
+          />
         </View>
         <Button
           title="Change Piture"
