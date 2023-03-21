@@ -17,8 +17,12 @@ import { getClientLocation } from "../../../../../Redux/MapReducers/ClientLocati
 import CustomerLocation from "../../../MapComponent/CustomerLocation";
 import { getReview } from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { AirbnbRating } from "react-native-ratings";
+import { server } from "../../../../../Static";
+import { useState } from "react";
 
 export default function RequestDetails({ route, navigation }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [imageUrl, setImageURL] = useState("");
   const Data = route.params;
   const mechanicID = Data.Details.Recepient;
   const clientID = Data.Details.Requestor;
@@ -42,15 +46,30 @@ export default function RequestDetails({ route, navigation }) {
     dispatch(getReview(clientID, "Client"));
   }, [dispatch]);
 
+  const image = `${server}/api/Upload/files/${clientID}/PROBLEM`;
+  if (!isLoaded) {
+    setImageURL(image + "?" + new Date());
+    setIsLoaded(true);
+  }
+
   if (rating !== null) {
     return (
       <>
         <CustomerLocation />
+
         <View style={{ ...styles.container }}>
           <Text style={{ textAlign: "center", padding: 10, fontSize: 20 }}>
             Service Request
           </Text>
           <View style={{ ...styles.requestDetails, ...styles.shadow }}>
+            <View
+              style={{ backgroundColor: "red", width: "30%", height: "20%" }}
+            >
+              <Image
+                source={{ uri: imageUrl }}
+                style={{ width: "100%", height: "100%" }}
+              />
+            </View>
             <Text style={{ ...styles.fields }}>Requestor: {fName}</Text>
             <Text style={{ ...styles.fields }}>
               Rating: <AirbnbRating defaultRating={rating.Rating} isDisabled />

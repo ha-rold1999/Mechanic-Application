@@ -18,6 +18,7 @@ export const profileSlice = createSlice({
     ShopID: "",
     ShopName: "",
     ShopDescripction: "",
+    Profile: null,
   },
   reducers: {
     getProfile: (state, action) => {
@@ -40,10 +41,13 @@ export const profileSlice = createSlice({
       state.ShopDescripction =
         action.payload.AccountData.accountStatus.Shop.ShopDescription;
     },
+    getProfilePic: (state, action) => {
+      state.Profile = action.payload;
+    },
   },
 });
 
-export const { getProfile } = profileSlice.actions;
+export const { getProfile, getProfilePic } = profileSlice.actions;
 export const profileSliceReducers = profileSlice.reducer;
 
 export const deleteAccount = (UUID) => () => {
