@@ -77,9 +77,10 @@ export default function PhoneCamera(props) {
                     body: formData,
                   })
                     .then((res) => res.json())
-                    .then((response) =>
-                      console.log(JSON.stringify(response, null, 2))
-                    )
+                    .then((response) => {
+                      console.log(JSON.stringify(response, null, 2));
+                      props.setIsLoaded(false);
+                    })
                     .catch((err) => console.log("ERROR: " + err));
                 }}
               />

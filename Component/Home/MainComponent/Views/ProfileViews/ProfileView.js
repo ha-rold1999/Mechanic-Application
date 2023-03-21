@@ -7,23 +7,31 @@ import PhoneCamera from "./Camera";
 import { server } from "../../../../../Static";
 
 export default function Profile({ navigation }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [imageUrl, setImageURL] = useState("");
   const [openCamera, setOpenCamera] = useState(false);
   const { UUID, Firstname, Lastname, Contact, Birthdate, Address, Profile } =
     useSelector((state) => state.profileSlice);
   const { myRating } = useSelector((state) => state.requestListSlice);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getReview(UUID, "Profile"));
   }, []);
+
   const image = `${server}/api/Upload/files/${UUID}/PROFILE`;
+
+  if (!isLoaded) {
+    setImageURL(image + "?" + new Date());
+    setIsLoaded(true);
+  }
+
   if (myRating !== null) {
     return (
       <View>
         <View style={{ backgroundColor: "red", width: "50%", height: "30%" }}>
           <Image
-            source={{
-              uri: image + "?" + new Date(),
-            }}
+            source={{ uri: imageUrl }}
             style={{ width: "100%", height: "100%" }}
           />
         </View>
@@ -61,7 +69,11 @@ export default function Profile({ navigation }) {
             navigation.navigate("Delete");
           }}
         />
-        <PhoneCamera openCamera={openCamera} setOpenCamera={setOpenCamera} />
+        <PhoneCamera
+          openCamera={openCamera}
+          setOpenCamera={setOpenCamera}
+          setIsLoaded={setIsLoaded}
+        />
       </View>
     );
   }
