@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentLocation } from "../Redux/MapReducers/LocationReducers";
 import WalletStack from "./Home/WalletComponent/WalletStack";
+import HistoryTabs from "./Home/HistoryComponent/HistoryTabs";
 
 export default function HomeComponent() {
   const { UUID } = useSelector((state) => state.profileSlice);
@@ -21,6 +22,7 @@ export default function HomeComponent() {
   return (
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={Main} />
+      <Drawer.Screen name="History" component={HistoryTabs} />
       <Drawer.Screen name="Setting" component={Setting} />
       <Drawer.Screen name="Map" component={ShowMaps} />
       <Drawer.Screen name="Logout" component={LogoutView} />
