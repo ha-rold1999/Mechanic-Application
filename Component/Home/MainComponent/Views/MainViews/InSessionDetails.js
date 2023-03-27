@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addBalance } from "../../../../../Redux/WalletReducers/WalletReducer";
 import { postBilling } from "../../../../../Redux/BillingReducers/BillingReducers";
 import ReviewModal from "./ReviewModal";
+import ReportModal from "./ReportModal";
 
 export default function InSessionDetails() {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function InSessionDetails() {
     (state) => state.requestListSlice
   );
   const [isRating, setIsRating] = useState(false);
+  const [isReporting, setIsReporting] = useState(false);
 
   useEffect(() => {}, [inSession]);
 
@@ -46,6 +48,12 @@ export default function InSessionDetails() {
           }}
         />
         <Button
+          title="Report Mechanic"
+          onPress={() => {
+            setIsReporting(true);
+          }}
+        />
+        <Button
           title="OK"
           onPress={() => {
             dispatch(clearSessionDetails(null));
@@ -63,6 +71,10 @@ export default function InSessionDetails() {
           }}
         />
         <ReviewModal modalVisible={isRating} setModalVisible={setIsRating} />
+        <ReportModal
+          modalVisible={isReporting}
+          setModalVisible={setIsReporting}
+        />
       </View>
     );
   }

@@ -27,7 +27,7 @@ export default function ReviewModal(props) {
         }}
       />
       <Button
-        title="Submit Reting"
+        title="Submit Rating"
         onPress={() => {
           dispatch(postReview(clienID, rating));
           props.setModalVisible(!props.modalVisible);
