@@ -74,6 +74,7 @@ export default function InSessionDetails() {
         <ReportModal
           modalVisible={isReporting}
           setModalVisible={setIsReporting}
+          UUID={UUID}
         />
       </View>
     );
