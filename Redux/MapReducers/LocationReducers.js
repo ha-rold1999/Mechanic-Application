@@ -65,8 +65,8 @@ export const getCurrentLocation = (UUID) => (dispatch) => {
       let location = await Location.getCurrentPositionAsync();
       dispatch(
         postLocation({
-          longitude: location.coords.longitude,
-          latitude: location.coords.latitude,
+          longitude: 123.94537465171992,
+          latitude: 11.092247437604149,
           UUID: UUID,
         })
       );

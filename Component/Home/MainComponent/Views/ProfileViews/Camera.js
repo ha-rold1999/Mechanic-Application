@@ -4,6 +4,7 @@ import { Camera } from "expo-camera";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfilePic } from "../../../../../Redux/ProfileReducers/ProfileReducer";
+import { server } from "../../../../../Static";
 
 export default function PhoneCamera(props) {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ export default function PhoneCamera(props) {
                   console.log(
                     "Form data: " + JSON.stringify(formData, null, 2)
                   );
-                  fetch("http://119.92.196.92:5003/api/Upload", {
+                  fetch(`${server}/api/Upload`, {
                     method: "POST",
                     headers: {
                       UserID: UUID,
