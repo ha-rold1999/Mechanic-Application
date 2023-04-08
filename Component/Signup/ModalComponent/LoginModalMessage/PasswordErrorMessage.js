@@ -9,9 +9,7 @@ export default function PasswordError(props) {
           source={require("../../../../assets/Icons/warning.png")}
           style={modelStyle.icon}
         />
-        <Text style={modelStyle.activityText}>
-          Incorect password does not exist
-        </Text>
+        <Text style={modelStyle.activityText}>Incorect password</Text>
       </View>
       <Pressable
         style={modelStyle.button}
