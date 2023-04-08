@@ -36,7 +36,6 @@ export default function PhoneCamera(props) {
     }
   };
 
-  console.log(UUID);
   return (
     <Modal animationType="slide" transparent={true} visible={props.openCamera}>
       <Button
@@ -66,9 +65,6 @@ export default function PhoneCamera(props) {
                     name: "photo.png",
                     type: "image/png",
                   });
-                  console.log(
-                    "Form data: " + JSON.stringify(formData, null, 2)
-                  );
                   fetch(`${server}/api/Upload`, {
                     method: "POST",
                     headers: {
@@ -79,7 +75,6 @@ export default function PhoneCamera(props) {
                   })
                     .then((res) => res.json())
                     .then((response) => {
-                      console.log(JSON.stringify(response, null, 2));
                       props.setIsLoaded(false);
                     })
                     .catch((err) => console.log("ERROR: " + err));

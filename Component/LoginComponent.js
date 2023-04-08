@@ -31,8 +31,6 @@ export default function LoginScreen({ navigation }) {
     dispatch(loginForm.checkLoginForm("error"));
     if (!formError) {
       setModalVisible(true);
-      console.log(`${server}/api/Account`);
-      console.log(username, password);
       fetch(`${server}/api/Account`, {
         method: "GET",
         headers: {

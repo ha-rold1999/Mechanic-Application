@@ -51,9 +51,6 @@ export const postBilling = (ShopID, fee, service, details) => () => {
       }),
     })
       .then((res) => res.json())
-      .then((response) =>
-        console.log("Billing Posted: " + JSON.stringify(response, null, 2))
-      )
       .catch((error) => console.log(error));
   } catch (error) {
     console.log(error);

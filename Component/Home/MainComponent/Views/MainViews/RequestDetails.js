@@ -34,13 +34,11 @@ export default function RequestDetails({ route, navigation }) {
   const vehicle = Data.Details.Vehicle;
   const description = Data.Details.Description;
 
-  console.log("Request Details: " + JSON.stringify(Data.Details, null, 2));
   const dispatch = useDispatch();
 
   const details = `Service: ${serviceName} | Client: ${fName} | Contact: ${contact} | Location: ${location} | Vehicle: ${vehicle} | Description: ${description}`;
   const { rating } = useSelector((state) => state.requestListSlice);
 
-  console.log(serviceName);
   useEffect(() => {
     dispatch(getClientLocation(clientID));
     dispatch(getReview(clientID, "Client"));

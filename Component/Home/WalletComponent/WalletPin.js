@@ -22,7 +22,6 @@ export default function WalletPin({ navigation }) {
   const { pincode } = useSelector((state) => state.walletSlice);
 
   const dispatch = useDispatch();
-  console.log("Pincode: " + pincode);
 
   useEffect(() => {
     dispatch(getUserWallet(UUID, setIsLoading));
@@ -44,7 +43,6 @@ export default function WalletPin({ navigation }) {
         <Button
           title="Submit"
           onPress={() => {
-            console.log("New Wallet");
             dispatch(setWalletPin(UUID, pin));
             refreshComponent();
             navigation.navigate("WalletPin");

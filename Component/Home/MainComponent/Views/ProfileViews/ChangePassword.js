@@ -92,25 +92,6 @@ export default function ChangePassword({ navigation }) {
           </Pressable>
         </View>
       </View>
-
-      {/* <Text>Type New Password</Text>
-      <TextInput secureTextEntry={true} onChangeText={setNewPass} />
-      <Text>Re-type New Password</Text>
-      <TextInput secureTextEntry={true} onChangeText={setConfirmPass} />
-      {error && <Text>Password does not match</Text>}
-      <Button
-        title="Change Password"
-        onPress={() => {
-          if (newPass !== confirmPass) {
-            setError(true);
-          } else {
-            console.log("ERROR");
-            setError(false);
-            dispatch(changePassword(UUID, newPass));
-            navigation.reset({ index: 0, routes: [{ name: "Login" }] });
-          }
-        }}
-      /> */}
     </View>
   );
 }

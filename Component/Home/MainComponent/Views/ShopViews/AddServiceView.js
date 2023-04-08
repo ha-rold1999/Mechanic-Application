@@ -1,7 +1,7 @@
 import { View, Text, TextInput, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
-import { apiKey,server } from "../../../../../Static";
+import { apiKey, server } from "../../../../../Static";
 
 export default function AddService({ navigation, route }) {
   const ShopData = route.params;
@@ -59,7 +59,6 @@ export default function AddService({ navigation, route }) {
       <Picker
         selectedValue={selectedValue}
         onValueChange={(itemValue) => {
-          console.log(selectedValue);
           setSelectedValue(itemValue);
         }}
       >

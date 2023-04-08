@@ -60,9 +60,6 @@ export const deleteAccount = (UUID) => () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(JSON.stringify(data, null, 2));
-      })
       .catch((err) => console.log(err));
   } catch (error) {
     console.log(error);
@@ -79,9 +76,6 @@ export const changePassword = (UUID, NewPassword) => () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(JSON.stringify(data, null, 2));
-      })
       .catch((err) => console.log(err));
   } catch (error) {
     console.log(error);

@@ -104,9 +104,6 @@ export const fetchDeleteReq = (clientID) => async (dispatch) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(JSON.stringify(data, null, 2));
-      })
       .catch((error) => console.log(error));
   } catch (error) {
     console.log(error);
@@ -129,7 +126,6 @@ export const acceptReq =
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(JSON.stringify(data, null, 2));
           dispatch(setClientID(clientID));
         })
         .catch((error) => console.log(error));
@@ -152,9 +148,6 @@ export const postReview = (mechID, rating) => () => {
       }),
     })
       .then((res) => res.json())
-      .then((response) => {
-        console.log("Rating Response: " + JSON.stringify(response, null, 2));
-      })
       .catch((error) => console.log(error));
   } catch (error) {
     console.log(error);

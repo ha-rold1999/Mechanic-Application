@@ -168,7 +168,6 @@ export default function ChangeProfile({ navigation }) {
             //lastname validation
             if (!lname) {
               setLNameError("Enter your lastname");
-              console.log("Lastname: " + LastnameError);
             } else if (!/^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i.test(lname)) {
               setLNameError("Enter a valid lastname");
             } else {
@@ -236,38 +235,6 @@ export default function ChangeProfile({ navigation }) {
           <Text style={{ fontSize: 15 }}>Save Changes</Text>
         </Pressable>
       </View>
-      {/* <Button
-        title="Save Changes"
-        onPress={() => {
-          dispatch(
-            changeInfo(
-              UUID,
-              fname,
-              lname,
-              contact,
-              Birthdate,
-              address,
-              LicenseNumber,
-              exp
-            )
-          );
-
-          setTimeout(() => {
-            fetch(`${server}/api/Account`, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                "AYUS-API-KEY": apiKey,
-                uuid: UUID,
-              },
-            })
-              .then((res) => res.json())
-              .then((data) => dispatch(getProfile(data)))
-              .then(() => navigation.navigate("Profile"))
-              .catch((error) => console.log(error));
-          }, 500);
-        }}
-      /> */}
     </View>
   );
 }

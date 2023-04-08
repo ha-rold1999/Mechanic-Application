@@ -3,7 +3,6 @@ import React from "react";
 
 export default function BillingDetails({ route }) {
   const Details = route.params;
-  console.log("Details: " + JSON.stringify(Details.Details, null, 2));
   return (
     <View>
       <Text>BillingDetails</Text>
