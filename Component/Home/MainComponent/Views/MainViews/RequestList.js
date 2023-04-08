@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import RequestCard from "./RequestCard";
 import MapLocation from "../../../MapComponent/MapView";
 import InSessionDetails from "./InSessionDetails";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function RequestList({ navigation }) {
   const { UUID } = useSelector((state) => state.profileSlice);
@@ -49,7 +50,12 @@ export default function RequestList({ navigation }) {
       );
     } else if (requestsDetails.length) {
       return (
-        <>
+        <LinearGradient
+          colors={["#cff5fb", "#fcfdfd"]}
+          style={{ flex: 1 }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
           <MapLocation />
           <FlatList
             data={requestsDetails}
@@ -57,14 +63,19 @@ export default function RequestList({ navigation }) {
               <RequestCard details={request} navigation={navigation} />
             )}
           />
-        </>
+        </LinearGradient>
       );
     } else {
       return (
-        <>
+        <LinearGradient
+          colors={["#cff5fb", "#fcfdfd"]}
+          style={{ flex: 1 }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
           <MapLocation />
           <Text>No Request as of the moment</Text>
-        </>
+        </LinearGradient>
       );
     }
   }

@@ -34,10 +34,12 @@ export default function MapLocation() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.2,
+    flex: 0.5,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    marginHorizontal: 5,
+    elevation: 5,
   },
   map: {
     width: "100%",

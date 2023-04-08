@@ -11,28 +11,26 @@ export default function CustomerLocation() {
 
   if (longitude !== "") {
     return (
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          ref={(ref) => {
-            mapRef = ref;
-          }}
-          provider="google"
-          initialRegion={{
+      <MapView
+        style={styles.map}
+        ref={(ref) => {
+          mapRef = ref;
+        }}
+        provider="google"
+        initialRegion={{
+          longitude: longitude,
+          latitude: latitude,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
+        }}
+      >
+        <Marker
+          coordinate={{
             longitude: longitude,
             latitude: latitude,
-            latitudeDelta: 0.05,
-            longitudeDelta: 0.05,
           }}
-        >
-          <Marker
-            coordinate={{
-              longitude: longitude,
-              latitude: latitude,
-            }}
-          />
-        </MapView>
-      </View>
+        />
+      </MapView>
     );
   }
 
@@ -45,14 +43,13 @@ export default function CustomerLocation() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.2,
+    flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
   map: {
     width: "100%",
-    height: "400%",
-    maxHeight: 400,
+    height: "100%",
   },
 });

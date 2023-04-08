@@ -7,6 +7,8 @@ import {
   StyleSheet,
   Image,
   ActivityIndicator,
+  Linking,
+  ScrollView,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,9 +18,10 @@ import {
 import { getClientLocation } from "../../../../../Redux/MapReducers/ClientLocationReducer";
 import CustomerLocation from "../../../MapComponent/CustomerLocation";
 import { getReview } from "../../../../../Redux/RequestListReducer/RequestListReducer";
-import { AirbnbRating } from "react-native-ratings";
+import { AirbnbRating, Rating } from "react-native-ratings";
 import { server } from "../../../../../Static";
 import { useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function RequestDetails({ route, navigation }) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,31 +55,91 @@ export default function RequestDetails({ route, navigation }) {
 
   if (rating !== null) {
     return (
-      <>
-        <CustomerLocation />
-
-        <View style={{ ...styles.container }}>
-          <Text style={{ textAlign: "center", padding: 10, fontSize: 20 }}>
-            Service Request
-          </Text>
-          <View style={{ ...styles.requestDetails, ...styles.shadow }}>
+      <LinearGradient
+        colors={["#cff5fb", "#fcfdfd"]}
+        style={{ flex: 1, paddingHorizontal: 5 }}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <View style={{ width: "100%", flex: 0.4, marginBottom: 5 }}>
+          <CustomerLocation />
+        </View>
+        <View style={{ width: "100%" }}>
+          <View
+            style={{
+              width: "100%",
+              borderRadius: 10,
+              padding: 10,
+              backgroundColor: "white",
+              elevation: 5,
+              flexDirection: "row",
+            }}
+          >
+            <View>
+              <Text style={{ fontSize: 10 }}>Client ID: {clientID}</Text>
+              <Text style={{ fontSize: 20, fontWeight: "500" }}>{fName}</Text>
+              <Text>
+                <Rating
+                  type="custom"
+                  startingValue={rating.Rating}
+                  readonly={true}
+                  imageSize={20}
+                />
+              </Text>
+              <Text>{contact}</Text>
+            </View>
             <View
-              style={{ backgroundColor: "red", width: "30%", height: "20%" }}
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
+              <Pressable
+                onPress={() => {
+                  const phoneUrl = `tel:${contact}`;
+                  Linking.openURL(phoneUrl);
+                }}
+              >
+                <Image
+                  source={require("../../../../../assets/Icons/call.png")}
+                  style={{ width: 30, height: 30 }}
+                />
+              </Pressable>
+            </View>
+          </View>
+        </View>
+        <View style={{ marginTop: 5, flex: 1 }}>
+          <View style={{ flexDirection: "row", flex: 1 }}>
+            <View style={{ width: "50%", paddingLeft: 5 }}>
+              <ScrollView>
+                <Text style={{ fontWeight: "700" }}> Request: </Text>
+                <Text style={{ paddingLeft: 3 }}>
+                  {serviceName.split(":")[0]}
+                </Text>
+                <Text style={{ fontWeight: "700" }}> Vehicle: </Text>
+                <Text style={{ paddingLeft: 3 }}>{vehicle}</Text>
+                <Text style={{ fontWeight: "700" }}> Details: </Text>
+                <View style={{ paddingLeft: 3 }}>
+                  <Text adjustsFontSizeToFit={true}>{description}</Text>
+                </View>
+              </ScrollView>
+            </View>
+            <View style={{ alignItems: "center", flex: 1 }}>
               <Image
                 source={{ uri: imageUrl }}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: 150, height: 150, borderRadius: 10 }}
               />
             </View>
-            <Text style={{ ...styles.fields }}>Requestor: {fName}</Text>
-            <Text style={{ ...styles.fields }}>
-              Rating: <AirbnbRating defaultRating={rating.Rating} isDisabled />
-            </Text>
-            <Text style={{ ...styles.fields }}>Service: {serviceName}</Text>
-            <Text style={{ ...styles.fields }}>Contact: {contact}</Text>
-            <Text style={{ ...styles.fields }}>Location: {location}</Text>
-            <Text style={{ ...styles.fields }}>Vehicle: {vehicle}</Text>
-            <Text style={{ ...styles.fields }}>Information: {description}</Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-evenly",
+            }}
+          >
             <View style={{ ...styles.paddingButton }}>
               <Button
                 color={"red"}
@@ -101,7 +164,24 @@ export default function RequestDetails({ route, navigation }) {
             </View>
           </View>
         </View>
-      </>
+        {/* <View style={{ flex: 1, paddingHorizontal: 5 }}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "blue",
+              marginBottom: 5,
+              elevation: 10,
+            }}
+          >
+            
+          </View>
+
+          <View>
+            
+            
+          </View>
+        </View> */}
+      </LinearGradient>
     );
   }
 
@@ -114,14 +194,11 @@ export default function RequestDetails({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
     width: "100%",
-    bottom: 0,
-    padding: 10,
+    padding: 0,
     alignContent: "center",
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#e8f1f8",
   },
   requestDetails: {
     position: "relative",
@@ -129,6 +206,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 1,
     backgroundColor: "white",
+    borderRadius: 10,
   },
   shadow: {
     shadowColor: "#228BD4",

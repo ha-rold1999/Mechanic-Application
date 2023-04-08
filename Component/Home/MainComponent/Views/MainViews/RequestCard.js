@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 
 export default function RequestCard({ details, navigation }) {
   return (
@@ -9,14 +9,39 @@ export default function RequestCard({ details, navigation }) {
     >
       <View
         style={{
-          borderWidth: 1,
           margin: 4,
           elevation: 5,
-          backgroundColor: "pink",
+          backgroundColor: "white",
+          borderRadius: 10,
+          paddingHorizontal: 5,
+          paddingVertical: 10,
+          paddingLeft: 20,
         }}
       >
-        <Text>{details.item.Recepient}</Text>
-        <Text>{details.item.Service}</Text>
+        <Text style={{ fontWeight: "600", fontSize: 15 }}>
+          {details.item.Service.split(":")[0]}
+        </Text>
+        <Text style={{ fontSize: 15 }}>
+          P{details.item.Service.split(":")[1]}
+        </Text>
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={require("../../../../../assets/Icons/person.png")}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text style={{ fontSize: 15, paddingLeft: 5 }}>
+            {details.item.FullName}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={require("../../../../../assets/Icons/vehicle.png")}
+            style={{ width: 20, height: 20 }}
+          />
+          <Text style={{ fontSize: 15, paddingLeft: 5 }}>
+            {details.item.Vehicle}
+          </Text>
+        </View>
       </View>
     </Pressable>
   );
