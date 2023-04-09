@@ -138,9 +138,36 @@ export default function RequestDetails({ route, navigation }) {
               flexDirection: "row",
               width: "100%",
               justifyContent: "space-evenly",
+              paddingBottom: 10,
             }}
           >
-            <View style={{ ...styles.paddingButton }}>
+            <View
+              style={{
+                backgroundColor: "red",
+                paddingHorizontal: 50,
+                paddingVertical: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Pressable>
+                <Text style={{ color: "white" }}>Decline</Text>
+              </Pressable>
+            </View>
+            <View
+              style={{
+                backgroundColor: "#209589",
+                paddingHorizontal: 50,
+                paddingVertical: 10,
+                borderRadius: 10,
+              }}
+            >
+              <Pressable>
+                <Text style={{ color: "white", fontWeight: "500" }}>
+                  Accept
+                </Text>
+              </Pressable>
+            </View>
+            {/* <View style={{ ...styles.paddingButton }}>
               <Button
                 color={"red"}
                 title="Decline"
@@ -161,7 +188,7 @@ export default function RequestDetails({ route, navigation }) {
                   dispatch(fetchDeleteReq(requestID));
                 }}
               />
-            </View>
+            </View> */}
           </View>
         </View>
         {/* <View style={{ flex: 1, paddingHorizontal: 5 }}>
