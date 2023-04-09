@@ -1,4 +1,12 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Linking,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +41,8 @@ export default function SessionMap({ SessionID, SessionDetails }) {
     return <ActivityIndicator />;
   } else {
     return (
-      <View>
+      <View style={{ paddingHorizontal: 10 }}>
+        <Text style={{ fontSize: 10 }}> Session ID: {SessionID}</Text>
         <MapView
           style={styles.map}
           provider="google"
@@ -59,7 +68,65 @@ export default function SessionMap({ SessionID, SessionDetails }) {
             }}
           />
         </MapView>
-        <Text>{SessionDetails}</Text>
+        <View
+          style={{
+            paddingHorizontal: 10,
+          }}
+        >
+          <View style={{ height: "10%" }}>
+            <Text
+              style={{ fontSize: 30, fontWeight: "600", textAlign: "center" }}
+            >
+              {SessionDetails.split("|")[0].split(":")[1]}
+            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Image
+                source={require("../../../assets/Icons/vehicle.png")}
+                style={{ width: 30, height: 30 }}
+              />
+              <Text style={{ fontSize: 20, fontWeight: "400" }}>
+                {SessionDetails.split("|")[4].split(":")[1]}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Image
+                source={require("../../../assets/Icons/person.png")}
+                style={{ width: 30, height: 30 }}
+              />
+              <Text style={{ fontSize: 20, fontWeight: "400" }}>
+                {SessionDetails.split("|")[1].split(":")[1]}
+              </Text>
+            </View>
+          </View>
+
+          <View style={{ alignItems: "center" }}>
+            <Pressable
+              style={{
+                paddingHorizontal: 30,
+                paddingVertical: 10,
+                backgroundColor: "#209589",
+                flexDirection: "row",
+                alignItems: "center",
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                const phoneUrl = `tel:${
+                  SessionDetails.split("|")[2].split(":")[1]
+                }`;
+                Linking.openURL(phoneUrl);
+              }}
+            >
+              <Image
+                source={require("../../../assets/Icons/call.png")}
+                style={{ width: 30, height: 30 }}
+              />
+              <Text style={{ fontSize: 20, fontWeight: "500", color: "white" }}>
+                {SessionDetails.split("|")[2].split(":")[1]}
+              </Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
     );
   }
@@ -76,5 +143,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "400%",
     maxHeight: 400,
+    marginRight: 10,
   },
 });

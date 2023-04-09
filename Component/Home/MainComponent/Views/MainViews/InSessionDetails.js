@@ -24,7 +24,6 @@ export default function InSessionDetails() {
   if (inSession && sessionDetails !== null) {
     return (
       <View>
-        <Text>In Session</Text>
         <SessionMap
           SessionID={sessionDetails.foundData.SessionData.SessionID}
           SessionDetails={sessionDetails.foundData.SessionData.SessionDetails}
