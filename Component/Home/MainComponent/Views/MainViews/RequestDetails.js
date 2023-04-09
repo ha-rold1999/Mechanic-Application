@@ -141,27 +141,38 @@ export default function RequestDetails({ route, navigation }) {
               paddingBottom: 10,
             }}
           >
-            <View
-              style={{
-                backgroundColor: "red",
-                paddingHorizontal: 50,
-                paddingVertical: 10,
-                borderRadius: 10,
-              }}
-            >
-              <Pressable>
+            <View>
+              <Pressable
+                onPress={() => {
+                  dispatch(fetchDeleteReq(requestID));
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: "RequestList" }],
+                  });
+                }}
+                style={{
+                  backgroundColor: "red",
+                  paddingHorizontal: 50,
+                  paddingVertical: 10,
+                  borderRadius: 10,
+                }}
+              >
                 <Text style={{ color: "white" }}>Decline</Text>
               </Pressable>
             </View>
-            <View
-              style={{
-                backgroundColor: "#209589",
-                paddingHorizontal: 50,
-                paddingVertical: 10,
-                borderRadius: 10,
-              }}
-            >
-              <Pressable>
+            <View>
+              <Pressable
+                onPress={() => {
+                  dispatch(acceptReq(clientID, mechanicID, details, dispatch));
+                  dispatch(fetchDeleteReq(requestID));
+                }}
+                style={{
+                  backgroundColor: "#209589",
+                  paddingHorizontal: 50,
+                  paddingVertical: 10,
+                  borderRadius: 10,
+                }}
+              >
                 <Text style={{ color: "white", fontWeight: "500" }}>
                   Accept
                 </Text>
