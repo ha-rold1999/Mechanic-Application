@@ -23,10 +23,7 @@ export default function HomeComponent() {
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={Main} />
       <Drawer.Screen name="History" component={HistoryTabs} />
-      <Drawer.Screen name="Setting" component={Setting} />
-      <Drawer.Screen name="Map" component={ShowMaps} />
       <Drawer.Screen name="Logout" component={LogoutView} />
-      <Drawer.Screen name="WalletStack" component={WalletStack} />
     </Drawer.Navigator>
   );
 }

@@ -17,6 +17,7 @@ import { server } from "../../../../../Static";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Clipboard from "expo-clipboard";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { getUserWallet } from "../../../../../Redux/WalletReducers/WalletReducer";
 
 export default function Profile({ navigation }) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -34,9 +35,11 @@ export default function Profile({ navigation }) {
   } = useSelector((state) => state.profileSlice);
   const { myRating } = useSelector((state) => state.requestListSlice);
   const dispatch = useDispatch();
+  const { balance } = useSelector((state) => state.walletSlice);
 
   useEffect(() => {
     dispatch(getReview(UUID, "Profile"));
+    dispatch(getUserWallet(UUID));
   }, []);
 
   const image = `${server}/api/Upload/files/${UUID}/PROFILE`;
@@ -133,7 +136,16 @@ export default function Profile({ navigation }) {
                   readonly={true}
                   imageSize={20}
                 />
-                <Text style={{ fontSize: 20 }}>{myRating.Rating}/5</Text>
+                <Text style={{ fontSize: 20 }}>
+                  {myRating.Rating.toFixed(2)}/5
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Image
+                  source={require("../../../../../assets/Icons/wallet.png")}
+                  style={{ width: 20, height: 20, marginRight: 5 }}
+                />
+                <Text>My Balance: {balance}</Text>
               </View>
             </View>
             <View
@@ -152,48 +164,6 @@ export default function Profile({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-
-          {/* <View style={{ backgroundColor: "red", width: "50%", height: "30%" }}>
-            <Image
-              source={{ uri: imageUrl }}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </View>
-          <Button
-            title="Change Piture"
-            onPress={() => {
-              setOpenCamera(true);
-            }}
-          />
-
-          <Text>
-            Name: {Firstname} {Lastname}
-          </Text>
-          <Text>
-            Rating: <AirbnbRating defaultRating={myRating.Rating} isDisabled />
-          </Text>
-          <Text>Contact: {Contact}</Text>
-          <Text>Birthdate: {Birthdate}</Text>
-          <Text>Address: {Address}</Text>
-          <Button
-            title="Change Password"
-            onPress={() => {
-              navigation.navigate("ChangePass");
-            }}
-          />
-          <Button
-            title="Edit Profile"
-            onPress={() => {
-              navigation.navigate("ChangeProf");
-            }}
-          />
-          <Button
-            title="Delete Account"
-            onPress={() => {
-              navigation.navigate("Delete");
-            }}
-          /> */}
-
           <View style={style.detailContainers}>
             <View style={{ width: "10%", alignItems: "center" }}>
               <Icon name="phone" size={25} style={style.labelIcon} />
