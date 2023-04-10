@@ -107,31 +107,6 @@ export default function ReviewModal(props) {
         </View>
       </View>
     </Modal>
-    // <Modal
-    //   animationType="slide"
-    //   transparent={true}
-    //   visible={props.modalVisible}
-    // >
-    //   <Text>{clienID}</Text>
-    //   <AirbnbRating
-    //     onFinishRating={(rating) => {
-    //       setRating(rating);
-    //     }}
-    //   />
-    //   <Button
-    //     title="Cancel"
-    //     onPress={() => {
-    //       props.setModalVisible(!props.modalVisible);
-    //     }}
-    //   />
-    //   <Button
-    //     title="Submit Rating"
-    //     onPress={() => {
-    //       dispatch(postReview(clienID, rating));
-    //       props.setModalVisible(!props.modalVisible);
-    //     }}
-    //   />
-    // </Modal>
   );
 }
 
