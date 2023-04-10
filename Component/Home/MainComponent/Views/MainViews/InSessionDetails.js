@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import SessionMap from "../../../MapComponent/SessionMap";
 import { clearSessionDetails } from "../../../../../Redux/RequestListReducer/RequestListReducer";
@@ -37,38 +37,157 @@ export default function InSessionDetails() {
     const servicePrice = serviceDetails[2];
     const serviceName = serviceDetails[1];
     return (
-      <View>
-        <Text>Session Ended</Text>
-        <Text>{sessionDetails.foundData.SessionData.SessionDetails}</Text>
-        <Button
-          title="Rate Client?"
-          onPress={() => {
-            setIsRating(true);
+      <View style={{ paddingHorizontal: 10 }}>
+        <View style={{ alignItems: "center" }}>
+          <Text style={{ fontSize: 30, fontWeight: "700" }}>Session Ended</Text>
+        </View>
+
+        <View
+          style={{
+            borderWidth: 2,
+            padding: 10,
+            borderRadius: 10,
           }}
-        />
-        <Button
-          title="Report Mechanic"
-          onPress={() => {
-            setIsReporting(true);
-          }}
-        />
-        <Button
-          title="OK"
-          onPress={() => {
-            dispatch(clearSessionDetails(null));
-            dispatch(
-              postBilling(
-                ShopID,
-                servicePrice,
-                serviceName,
-                sessionDetails.foundData.SessionData.SessionDetails
-              )
-            );
-            const newBal =
-              parseFloat(balance) + (parseFloat(servicePrice) - 25);
-            dispatch(addBalance(UUID, newBal));
-          }}
-        />
+        >
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ width: "50%" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignContent: "center",
+                  marginVertical: 5,
+                }}
+              >
+                <Image
+                  source={require("../../../../../assets/Icons/service.png")}
+                  style={{ width: 20, height: 20 }}
+                />
+                <Text style={{ fontSize: 15 }}>{serviceName}</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignContent: "center",
+                  marginVertical: 5,
+                }}
+              >
+                <Image
+                  source={require("../../../../../assets/Icons/client.png")}
+                  style={{ width: 20, height: 20 }}
+                />
+                <Text>{datas[1].split(":")[1]}</Text>
+              </View>
+            </View>
+            <View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignContent: "center",
+                  marginVertical: 5,
+                }}
+              >
+                <Image
+                  source={require("../../../../../assets/Icons/money.png")}
+                  style={{ width: 20, height: 20 }}
+                />
+                <Text>{servicePrice}</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignContent: "center",
+                  marginVertical: 5,
+                }}
+              >
+                <Image
+                  source={require("../../../../../assets/Icons/car.png")}
+                  style={{ width: 20, height: 20 }}
+                />
+                <Text>{datas[4].split(":")[1]}</Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignContent: "center",
+              marginTop: 5,
+            }}
+          >
+            <Image
+              source={require("../../../../../assets/Icons/info.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>{datas[5].split(":")[1]}</Text>
+          </View>
+        </View>
+
+        <View style={{ marginTop: 10 }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+          >
+            <Pressable
+              style={{
+                backgroundColor: "red",
+                paddingHorizontal: 30,
+                paddingVertical: 10,
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                setIsReporting(true);
+              }}
+            >
+              <Text style={{ color: "white", fontWeight: "700" }}>
+                Report Mechanic
+              </Text>
+            </Pressable>
+            <Pressable
+              style={{
+                backgroundColor: "#228BD4",
+                paddingHorizontal: 30,
+                paddingVertical: 10,
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                setIsRating(true);
+              }}
+            >
+              <Text style={{ color: "white", fontWeight: "700" }}>
+                Rate Client
+              </Text>
+            </Pressable>
+          </View>
+
+          <View style={{ alignItems: "center", marginTop: 10 }}>
+            <Pressable
+              style={{
+                backgroundColor: "#209589",
+                paddingHorizontal: 140,
+                paddingVertical: 10,
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                dispatch(clearSessionDetails(null));
+                dispatch(
+                  postBilling(
+                    ShopID,
+                    servicePrice,
+                    serviceName,
+                    sessionDetails.foundData.SessionData.SessionDetails
+                  )
+                );
+                const newBal =
+                  parseFloat(balance) + (parseFloat(servicePrice) - 25);
+                dispatch(addBalance(UUID, newBal));
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 20, fontWeight: "700" }}>
+                OK
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+
         <ReviewModal modalVisible={isRating} setModalVisible={setIsRating} />
         <ReportModal
           modalVisible={isReporting}
