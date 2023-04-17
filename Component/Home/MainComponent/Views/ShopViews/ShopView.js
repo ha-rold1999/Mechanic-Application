@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchService } from "../../../../../Redux/ProfileReducers/ServiceReducer";
 import { apiKey } from "../../../../../Static";
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 export default function Shop(props) {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ export default function Shop(props) {
           />
 
           <Text style={{ fontSize: 20 }}>{ShopName}</Text>
-          <Text style={{ fontSize: 20 }}>{ShopDescripction}</Text>
+          <Text style={{ fontSize: 15 }}>{ShopDescripction}</Text>
         </View>
 
         {serviceLst.length === 0 && <Text>You have no services offered</Text>}
@@ -73,13 +74,25 @@ export default function Shop(props) {
           ))}
         </View>
         <View style={{ ...styles.buttonContainer }}>
-          <View style={{ width: "50%" }}>
-            <Button
-              title="Add Service"
+          <View
+            style={{
+              width: "50%",
+              backgroundColor: "#209589",
+              borderRadius: 10,
+            }}
+          >
+            <Pressable
+              style={{ alignItems: "center", paddingVertical: 10 }}
               onPress={() =>
                 props.navigation.navigate("AddService", { mechanicID: UUID })
               }
-            />
+            >
+              <Text style={{ color: "white" }}>Add Service</Text>
+            </Pressable>
+            {/* <Button
+              title="Add Service"
+              
+            /> */}
           </View>
         </View>
       </View>

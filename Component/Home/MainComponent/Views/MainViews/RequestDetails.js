@@ -178,47 +178,8 @@ export default function RequestDetails({ route, navigation }) {
                 </Text>
               </Pressable>
             </View>
-            {/* <View style={{ ...styles.paddingButton }}>
-              <Button
-                color={"red"}
-                title="Decline"
-                onPress={() => {
-                  dispatch(fetchDeleteReq(requestID));
-                  navigation.reset({
-                    index: 0,
-                    routes: [{ name: "RequestList" }],
-                  });
-                }}
-              />
-            </View>
-            <View style={{ ...styles.paddingButton }}>
-              <Button
-                title="Accept"
-                onPress={() => {
-                  dispatch(acceptReq(clientID, mechanicID, details, dispatch));
-                  dispatch(fetchDeleteReq(requestID));
-                }}
-              />
-            </View> */}
           </View>
         </View>
-        {/* <View style={{ flex: 1, paddingHorizontal: 5 }}>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: "blue",
-              marginBottom: 5,
-              elevation: 10,
-            }}
-          >
-            
-          </View>
-
-          <View>
-            
-            
-          </View>
-        </View> */}
       </LinearGradient>
     );
   }
