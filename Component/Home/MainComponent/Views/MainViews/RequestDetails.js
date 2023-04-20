@@ -165,6 +165,10 @@ export default function RequestDetails({ route, navigation }) {
                 onPress={() => {
                   dispatch(acceptReq(clientID, mechanicID, details, dispatch));
                   dispatch(fetchDeleteReq(requestID));
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: "RequestList" }],
+                  });
                 }}
                 style={{
                   backgroundColor: "#209589",

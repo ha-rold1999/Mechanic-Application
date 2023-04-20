@@ -7,6 +7,7 @@ import { addBalance } from "../../../../../Redux/WalletReducers/WalletReducer";
 import { postBilling } from "../../../../../Redux/BillingReducers/BillingReducers";
 import ReviewModal from "./ReviewModal";
 import ReportModal from "./ReportModal";
+import { getUserWallet } from "../../../../../Redux/WalletReducers/WalletReducer";
 
 export default function InSessionDetails() {
   const dispatch = useDispatch();
@@ -16,10 +17,12 @@ export default function InSessionDetails() {
   const [isRating, setIsRating] = useState(false);
   const [isReporting, setIsReporting] = useState(false);
 
-  useEffect(() => {}, [inSession]);
-
   const { balance } = useSelector((state) => state.walletSlice);
   const { UUID, ShopID } = useSelector((state) => state.profileSlice);
+
+  useEffect(() => {
+    dispatch(getUserWallet(UUID));
+  }, [inSession]);
 
   if (inSession && sessionDetails !== null) {
     return (
@@ -40,6 +43,7 @@ export default function InSessionDetails() {
       <View style={{ paddingHorizontal: 10 }}>
         <View style={{ alignItems: "center" }}>
           <Text style={{ fontSize: 30, fontWeight: "700" }}>Session Ended</Text>
+          <Text>{balance}</Text>
         </View>
 
         <View
@@ -138,7 +142,7 @@ export default function InSessionDetails() {
               }}
             >
               <Text style={{ color: "white", fontWeight: "700" }}>
-                Report Mechanic
+                Report Client
               </Text>
             </Pressable>
             <Pressable
@@ -176,8 +180,12 @@ export default function InSessionDetails() {
                     sessionDetails.foundData.SessionData.SessionDetails
                   )
                 );
-                const newBal =
-                  parseFloat(balance) + (parseFloat(servicePrice) - 25);
+                console.log("Service Price: " + servicePrice);
+                console.log("Balance: " + balance);
+                const newBal = parseFloat(
+                  balance + (parseFloat(servicePrice) - 25)
+                );
+                console.log("New Balance: " + newBal);
                 dispatch(addBalance(UUID, newBal));
               }}
             >

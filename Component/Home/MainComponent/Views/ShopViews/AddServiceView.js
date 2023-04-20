@@ -88,13 +88,6 @@ export default function AddService({ navigation, route }) {
             keyboardType={"numeric"}
           />
         </View>
-        {/* <TextInput
-          style={{ borderWidth: 1 }}
-          onChangeText={(text) => {
-            setPrice(text);
-          }}
-          keyboardType={"numeric"}
-        /> */}
         <Text>Enter Your Qualificatio For This Service</Text>
         <View style={FormStyle.textInputView}>
           <TextInput
@@ -108,12 +101,6 @@ export default function AddService({ navigation, route }) {
             }}
           />
         </View>
-        {/* <TextInput
-          style={{ borderWidth: 1 }}
-          onChangeText={(text) => {
-            setServiceExperties(text);
-          }}
-        /> */}
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Pressable
             style={{
@@ -122,19 +109,16 @@ export default function AddService({ navigation, route }) {
               backgroundColor: "#209589",
               borderRadius: 10,
             }}
+            onPress={() => {
+              fetchAddThisService();
+              navigation.navigate("ShopDesc");
+            }}
           >
             <Text style={{ fontWeight: "500", color: "white" }}>
               Add Service
             </Text>
           </Pressable>
         </View>
-        {/* <Button
-          title="Add Service"
-          onPress={() => {
-            fetchAddThisService();
-            navigation.navigate("ShopDesc");
-          }}
-        /> */}
       </View>
     </View>
   );

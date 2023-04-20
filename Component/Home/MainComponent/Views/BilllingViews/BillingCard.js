@@ -9,15 +9,17 @@ export default function BillingCard({ info, navigation }) {
     >
       <View
         style={{
+          padding: 5,
           borderWidth: 1,
+          borderRadius: 10,
           margin: 4,
           elevation: 5,
-          backgroundColor: "pink",
+          backgroundColor: "white",
         }}
       >
         <Text>{info.item.BillingDate}</Text>
         <Text>{info.item.ServiceFee}</Text>
-        <Text>{info.item.ServiceRemark}</Text>
+        <Text>{info.item.ServiceRemark.split("MORE DETAILS")[0]}</Text>
       </View>
     </Pressable>
   );

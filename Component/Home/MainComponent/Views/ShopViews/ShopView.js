@@ -89,10 +89,6 @@ export default function Shop(props) {
             >
               <Text style={{ color: "white" }}>Add Service</Text>
             </Pressable>
-            {/* <Button
-              title="Add Service"
-              
-            /> */}
           </View>
         </View>
       </View>

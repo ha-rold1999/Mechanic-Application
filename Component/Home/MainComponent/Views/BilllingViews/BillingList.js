@@ -26,7 +26,7 @@ export default function BillingList({ navigation }) {
     if (billingList.length) {
       return (
         <View>
-          <Text>BillingList</Text>
+          <Text style={{ paddingLeft: 5, fontWeight: "700" }}>BillingList</Text>
           <FlatList
             data={billingList}
             renderItem={(details) => (
