@@ -19,6 +19,7 @@ export const profileSlice = createSlice({
     ShopName: "",
     ShopDescripction: "",
     Profile: null,
+    Suspended: null,
   },
   reducers: {
     getProfile: (state, action) => {
@@ -40,6 +41,8 @@ export const profileSlice = createSlice({
       state.ShopName = action.payload.AccountData.accountStatus.Shop.ShopName;
       state.ShopDescripction =
         action.payload.AccountData.accountStatus.Shop.ShopDescription;
+      state.Suspended = action.payload.AccountData.accountStatus.IsLocked;
+      state.Online = action.payload.AccountData.accountStatus.Role.isOnline;
     },
     getProfilePic: (state, action) => {
       state.Profile = action.payload;

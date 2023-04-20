@@ -9,21 +9,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentLocation } from "../Redux/MapReducers/LocationReducers";
 import WalletStack from "./Home/WalletComponent/WalletStack";
 import HistoryTabs from "./Home/HistoryComponent/HistoryTabs";
+import SuspendedModal from "./Signup/ModalComponent/LoginModalMessage/SuspendedModal";
 
 export default function HomeComponent() {
-  const { UUID } = useSelector((state) => state.profileSlice);
+  const { UUID, Suspended } = useSelector((state) => state.profileSlice);
   const Drawer = createDrawerNavigator();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCurrentLocation(UUID));
   }, []);
-
+  console.log("Is Suspended: " + Suspended);
   return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Home" component={Main} />
-      <Drawer.Screen name="History" component={HistoryTabs} />
-      <Drawer.Screen name="Logout" component={LogoutView} />
-    </Drawer.Navigator>
+    <>
+      {Suspended && <SuspendedModal />}
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={Main} />
+        <Drawer.Screen name="History" component={HistoryTabs} />
+        <Drawer.Screen name="Logout" component={LogoutView} />
+      </Drawer.Navigator>
+    </>
   );
 }
