@@ -24,6 +24,8 @@ export default function Profile({ navigation }) {
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
+  const [isExpired, setExpired] = useState(false);
+
   const [imageUrl, setImageURL] = useState("");
   const [openCamera, setOpenCamera] = useState(false);
   const {
@@ -40,10 +42,16 @@ export default function Profile({ navigation }) {
   const dispatch = useDispatch();
   const { balance } = useSelector((state) => state.walletSlice);
 
+  const currentDate = new Date();
+  const licenseDate = new Date(Expiry.split("T")[0]);
+
   useEffect(() => {
     dispatch(getReview(UUID, "Profile"));
     dispatch(getUserWallet(UUID));
-  }, []);
+    if (licenseDate.getTime() < currentDate.getTime()) {
+      setExpired(true);
+    }
+  }, [Firstname, Lastname, Contact, Address, Expiry]);
 
   const image = `${server}/api/Upload/files/${UUID}/PROFILE`;
 
@@ -235,6 +243,20 @@ export default function Profile({ navigation }) {
               <Text style={{ ...style.lebelText, fontWeight: "800" }}>
                 {Expiry.split("T")[0]}
               </Text>
+              {isExpired && (
+                <View
+                  style={{
+                    backgroundColor: "yellow",
+                    alignItems: "center",
+                    padding: 10,
+                    margin: 10,
+                  }}
+                >
+                  <Text style={{ textAlign: "center" }}>
+                    License Already Expired
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
           <PhoneCamera
