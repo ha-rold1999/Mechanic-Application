@@ -51,10 +51,17 @@ export default function LoginScreen({ navigation }) {
             setIsPasswordWrong(true);
             setIsSuccess(false);
           } else {
-            setIsExist(false);
-            setIsPasswordWrong(false);
-            setIsSuccess(true);
-            dispatch(getProfile(data));
+            console.log("Account DATA: " + JSON.stringify(data, null, 2));
+            if (data.AccountData.accountStatus.Role === "MECHANIC") {
+              setIsExist(false);
+              setIsPasswordWrong(false);
+              setIsSuccess(true);
+              dispatch(getProfile(data));
+            } else {
+              setIsExist(true);
+              setIsPasswordWrong(false);
+              setIsSuccess(false);
+            }
           }
           setIsLoading(false);
         })
