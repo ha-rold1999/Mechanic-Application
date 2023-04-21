@@ -10,6 +10,7 @@ import { getCurrentLocation } from "../Redux/MapReducers/LocationReducers";
 import WalletStack from "./Home/WalletComponent/WalletStack";
 import HistoryTabs from "./Home/HistoryComponent/HistoryTabs";
 import SuspendedModal from "./Signup/ModalComponent/LoginModalMessage/SuspendedModal";
+import { isOnline } from "../Redux/ProfileReducers/ProfileReducer";
 
 export default function HomeComponent() {
   const { UUID, Suspended } = useSelector((state) => state.profileSlice);
@@ -18,6 +19,7 @@ export default function HomeComponent() {
 
   useEffect(() => {
     dispatch(getCurrentLocation(UUID));
+    dispatch(isOnline(UUID, true));
   }, []);
   console.log("Is Suspended: " + Suspended);
   return (

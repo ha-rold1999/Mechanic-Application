@@ -19,6 +19,7 @@ export default function InSessionDetails() {
 
   const { balance } = useSelector((state) => state.walletSlice);
   const { UUID, ShopID } = useSelector((state) => state.profileSlice);
+  const { serviceFee } = useSelector((state) => state.requestListSlice);
 
   useEffect(() => {
     dispatch(getUserWallet(UUID));
@@ -43,7 +44,6 @@ export default function InSessionDetails() {
       <View style={{ paddingHorizontal: 10 }}>
         <View style={{ alignItems: "center" }}>
           <Text style={{ fontSize: 30, fontWeight: "700" }}>Session Ended</Text>
-          <Text>{balance}</Text>
         </View>
 
         <View
@@ -175,7 +175,7 @@ export default function InSessionDetails() {
                 dispatch(
                   postBilling(
                     ShopID,
-                    servicePrice,
+                    serviceFee,
                     serviceName,
                     sessionDetails.foundData.SessionData.SessionDetails
                   )
@@ -183,7 +183,7 @@ export default function InSessionDetails() {
                 console.log("Service Price: " + servicePrice);
                 console.log("Balance: " + balance);
                 const newBal = parseFloat(
-                  balance + (parseFloat(servicePrice) - 25)
+                  balance + (parseFloat(servicePrice) - serviceFee)
                 );
                 console.log("New Balance: " + newBal);
                 dispatch(addBalance(UUID, newBal));

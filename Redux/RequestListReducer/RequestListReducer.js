@@ -10,6 +10,7 @@ export const requestListSlice = createSlice({
     rating: null,
     myRating: null,
     clienID: null,
+    serviceFee: null,
   },
   reducers: {
     getServiceRequest: (state, action) => {
@@ -35,6 +36,9 @@ export const requestListSlice = createSlice({
     setClientID: (state, action) => {
       state.clienID = action.payload;
     },
+    setServiceFee: (state, action) => {
+      state.serviceFee = action.payload;
+    },
   },
 });
 
@@ -45,6 +49,7 @@ export const {
   setRating,
   setMyRating,
   setClientID,
+  setServiceFee,
 } = requestListSlice.actions;
 export const requestList = (state) => state.requestList;
 export const requestListSliceReducer = requestListSlice.reducer;
@@ -81,6 +86,19 @@ export const checkSession = (UUID) => async (dispatch) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        //GET SERVICE FEE
+        fetch(`${server}/api/System/ServicePrice`, {
+          method: "GET",
+          headers: {
+            "AYUS-API-KEY": apiKey,
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log("Service Fee: " + JSON.stringify(res, null, 2));
+            dispatch(setServiceFee(res.ServicePrice));
+          });
+
         if (data.Status === 200) {
           dispatch(setInSession({ inSession: true, info: data }));
         } else {

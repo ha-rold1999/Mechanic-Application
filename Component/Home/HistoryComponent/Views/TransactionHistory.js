@@ -22,7 +22,7 @@ export default function TransactionHistory() {
         headers: {
           "AYUS-API-KEY": apiKey,
           UserID: UUID,
-          option: "transaction",
+          option: "session",
           limit: 10,
         },
       })

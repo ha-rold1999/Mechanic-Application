@@ -69,6 +69,27 @@ export const deleteAccount = (UUID) => () => {
   }
 };
 
+export const isOnline = (UUID, stat) => () => {
+  try {
+    fetch(`${server}/api/Account/AccountStatus`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "AYUS-API-KEY": apiKey,
+      },
+      body: JSON.stringify({
+        uuid: UUID,
+        isOnline: stat,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(JSON.stringify(res, null, 2)))
+      .catch((err) => console.log(err));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const changePassword = (UUID, NewPassword) => () => {
   try {
     fetch(`${server}/api/Account/Password?uuid=${UUID}`, {
