@@ -25,6 +25,9 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function RequestDetails({ route, navigation }) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
   const [imageUrl, setImageURL] = useState("");
   const Data = route.params;
   const mechanicID = Data.Details.Recepient;
@@ -52,6 +55,15 @@ export default function RequestDetails({ route, navigation }) {
     setImageURL(image + "?" + new Date());
     setIsLoaded(true);
   }
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+  const handleImageLoadFail = () => {
+    setImageLoading(false);
+    setImageError(true);
+  };
 
   if (rating !== null) {
     return (
@@ -125,11 +137,49 @@ export default function RequestDetails({ route, navigation }) {
                 </View>
               </ScrollView>
             </View>
-            <View style={{ alignItems: "center", flex: 1 }}>
+            <View
+              style={{
+                alignItems: "center",
+                width: 150,
+                height: 150,
+                backgroundColor: "#E8F1F8",
+              }}
+            >
               <Image
                 source={{ uri: imageUrl }}
                 style={{ width: 150, height: 150, borderRadius: 10 }}
+                onLoad={() => {
+                  handleImageLoad();
+                }}
+                onError={() => {
+                  handleImageLoadFail();
+                }}
               />
+              {imageLoading && (
+                <ActivityIndicator
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              )}
+              {imageError && (
+                <Image
+                  source={require("../../../../../assets/Icons/vehicle-placeholder.png")}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 100,
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                  }}
+                />
+              )}
             </View>
           </View>
 
