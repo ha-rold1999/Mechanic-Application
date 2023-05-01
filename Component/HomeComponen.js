@@ -21,7 +21,6 @@ export default function HomeComponent() {
     dispatch(getCurrentLocation(UUID));
     dispatch(isOnline(UUID, true));
   }, []);
-  console.log("Is Suspended: " + Suspended);
   return (
     <>
       {Suspended && <SuspendedModal />}

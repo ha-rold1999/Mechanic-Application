@@ -98,26 +98,6 @@ export default function RequestDetails({ route, navigation }) {
                   imageSize={20}
                 />
               </Text>
-              <Text>{contact}</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Pressable
-                onPress={() => {
-                  const phoneUrl = `tel:${contact}`;
-                  Linking.openURL(phoneUrl);
-                }}
-              >
-                <Image
-                  source={require("../../../../../assets/Icons/call.png")}
-                  style={{ width: 30, height: 30 }}
-                />
-              </Pressable>
             </View>
           </View>
         </View>

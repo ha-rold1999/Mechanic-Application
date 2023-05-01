@@ -8,8 +8,11 @@ import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 export default function AddService({ navigation, route }) {
   const ShopData = route.params;
   const [serviceList, setServiceList] = useState([]);
+
   const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValueError, setSelectedValueError] = useState();
   const [price, setPrice] = useState(0);
+  const [priceError, setPriceError] = useState();
   const [serviceExperties, setServiceExperties] = useState("");
 
   const fetchAllServices = async () => {
@@ -52,7 +55,7 @@ export default function AddService({ navigation, route }) {
 
   useEffect(() => {
     fetchAllServices();
-  }, []);
+  }, [selectedValue, selectedValueError, price, priceError]);
 
   return (
     <View style={{ flex: 1, marginHorizontal: 10 }}>
@@ -68,6 +71,10 @@ export default function AddService({ navigation, route }) {
               setSelectedValue(itemValue);
             }}
           >
+            <Picker.Item
+              label={"Select a service to offer"}
+              value={"default"}
+            />
             {serviceList.map(({ ServiceName, ServiceID }) => (
               <Picker.Item
                 label={ServiceName}
@@ -77,8 +84,12 @@ export default function AddService({ navigation, route }) {
             ))}
           </Picker>
         </View>
+        {selectedValueError && (
+          <Text style={{ color: "red" }}>{selectedValueError}</Text>
+        )}
 
         <Text>Enter Price</Text>
+
         <View style={FormStyle.textInputView}>
           <TextInput
             style={{ paddingLeft: 5, fontSize: 20, width: "100%" }}
@@ -88,6 +99,7 @@ export default function AddService({ navigation, route }) {
             keyboardType={"numeric"}
           />
         </View>
+        {priceError && <Text style={{ color: "red" }}>{priceError}</Text>}
         <Text>Enter Your Qualificatio For This Service</Text>
         <View style={FormStyle.textInputView}>
           <TextInput
@@ -110,8 +122,25 @@ export default function AddService({ navigation, route }) {
               borderRadius: 10,
             }}
             onPress={() => {
-              fetchAddThisService();
-              navigation.navigate("ShopDesc");
+              if (!selectedValue || selectedValue === "default") {
+                setSelectedValueError(
+                  "Please select a service you want to offer"
+                );
+              } else {
+                setSelectedValueError("");
+              }
+
+              if (!price) {
+                setPriceError("Enter the price of the service");
+              } else {
+                setPriceError("");
+              }
+
+              if (selectedValueError === "" && priceError === "") {
+                console.log("Accepted");
+                fetchAddThisService();
+                navigation.navigate("ShopDesc");
+              }
             }}
           >
             <Text style={{ fontWeight: "500", color: "white" }}>
