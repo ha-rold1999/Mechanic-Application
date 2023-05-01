@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getReview } from "../../../../../Redux/RequestListReducer/RequestListReducer";
@@ -18,6 +19,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Clipboard from "expo-clipboard";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getUserWallet } from "../../../../../Redux/WalletReducers/WalletReducer";
+import { Linking } from "react-native";
 
 export default function Profile({ navigation }) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -197,6 +199,22 @@ export default function Profile({ navigation }) {
                   style={{ width: 20, height: 20, marginRight: 5 }}
                 />
                 <Text>My Balance: {balance}</Text>
+                <Pressable
+                  style={{
+                    borderRadius: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  onPress={() => {
+                    let url = `http://192.53.114.221/gcash?merchant=AYUS@ICTEAM&amount=100&redirecturl=AYUS_UID_${UUID}_AMT_100`;
+                    Linking.openURL(url);
+                  }}
+                >
+                  <Image
+                    source={require("../../../../../assets/Icons/add.png")}
+                    style={{ width: 30, height: 30 }}
+                  />
+                </Pressable>
               </View>
             </View>
             <View

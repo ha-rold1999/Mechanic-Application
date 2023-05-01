@@ -95,7 +95,6 @@ export const checkSession = (UUID) => async (dispatch) => {
         })
           .then((res) => res.json())
           .then((res) => {
-            console.log("Service Fee: " + JSON.stringify(res, null, 2));
             dispatch(setServiceFee(res.ServicePrice));
           });
 

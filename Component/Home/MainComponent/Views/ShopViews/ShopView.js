@@ -11,7 +11,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchService } from "../../../../../Redux/ProfileReducers/ServiceReducer";
 import { apiKey } from "../../../../../Static";
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
+import { Pressable } from "react-native";
+import { deleteService } from "../../../../../Redux/ProfileReducers/ServiceReducer";
 
 export default function Shop(props) {
   const dispatch = useDispatch();
@@ -24,13 +25,44 @@ export default function Shop(props) {
   }, [dispatch]);
 
   const { serviceLst } = useSelector((state) => state.serviceSlice);
-
-  const ServiceList = ({ ServiceName, Price, ServiceExpertise }) => {
+  const ServiceList = ({ ServiceName, Price, ServiceExpertise, ServiceID }) => {
     return (
       <>
-        <Text>Service: {ServiceName}</Text>
-        <Text>Price: {Price}</Text>
-        <Text>Expertise: {ServiceExpertise}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "70%" }}>
+            <Text>Service: {ServiceName}</Text>
+            <Text>Price: {Price}</Text>
+            <Text>Expertise: {ServiceExpertise}</Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              width: "20%",
+              marginLeft: 10,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {/* <Pressable
+              style={{
+                padding: 5,
+                borderRadius: 10,
+                borderWidth: 1,
+              }}
+              onPress={() => {
+                console.log("UUID: " + UUID);
+                console.log("serviceID: " + ServiceID);
+                dispatch(deleteService(UUID, ServiceID));
+                props.navigation.reset({
+                  index: 0,
+                  routes: [{ name: "ShopDesc" }],
+                });
+              }}
+            >
+              <Text style={{ color: "red" }}>DELETE</Text>
+            </Pressable> */}
+          </View>
+        </View>
       </>
     );
   };
@@ -63,15 +95,18 @@ export default function Shop(props) {
 
         {serviceLst.length === 0 && <Text>You have no services offered</Text>}
         <View style={{ width: "100%", alignItems: "center" }}>
-          {serviceLst.map(({ ServiceName, UUID, Price, ServiceExpertise }) => (
-            <View style={{ ...styles.serviceOffer }} key={UUID}>
-              <ServiceList
-                ServiceName={ServiceName}
-                Price={Price}
-                ServiceExpertise={ServiceExpertise}
-              />
-            </View>
-          ))}
+          {serviceLst.map(
+            ({ ServiceName, UUID, Price, ServiceExpertise, ServiceID }) => (
+              <View style={{ ...styles.serviceOffer }} key={UUID}>
+                <ServiceList
+                  ServiceName={ServiceName}
+                  Price={Price}
+                  ServiceExpertise={ServiceExpertise}
+                  ServiceID={ServiceID}
+                />
+              </View>
+            )
+          )}
         </View>
         <View style={{ ...styles.buttonContainer }}>
           <View
