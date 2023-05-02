@@ -65,19 +65,36 @@ export default function PhoneCamera(props) {
                     name: "photo.png",
                     type: "image/png",
                   });
-                  fetch(`${server}/api/Upload`, {
-                    method: "POST",
-                    headers: {
-                      UserID: UUID,
-                      Filename: "PROFILE",
-                    },
-                    body: formData,
-                  })
-                    .then((res) => res.json())
-                    .then((response) => {
-                      props.setIsLoaded(false);
+
+                  if (props.upload === "PROFILE") {
+                    fetch(`${server}/api/Upload`, {
+                      method: "POST",
+                      headers: {
+                        UserID: UUID,
+                        Filename: "PROFILE",
+                      },
+                      body: formData,
                     })
-                    .catch((err) => console.log("ERROR: " + err));
+                      .then((res) => res.json())
+                      .then((response) => {
+                        props.setIsLoaded(false);
+                      })
+                      .catch((err) => console.log("ERROR: " + err));
+                  } else {
+                    fetch(`${server}/api/Upload`, {
+                      method: "POST",
+                      headers: {
+                        UserID: UUID,
+                        Filename: "LICENSE",
+                      },
+                      body: formData,
+                    })
+                      .then((res) => res.json())
+                      .then((response) => {
+                        props.setIsLoaded(false);
+                      })
+                      .catch((err) => console.log("ERROR: " + err));
+                  }
                 }}
               />
             }

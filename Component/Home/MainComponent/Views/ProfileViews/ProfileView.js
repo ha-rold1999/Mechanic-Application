@@ -281,6 +281,7 @@ export default function Profile({ navigation }) {
             openCamera={openCamera}
             setOpenCamera={setOpenCamera}
             setIsLoaded={setIsLoaded}
+            upload={"PROFILE"}
           />
         </View>
       </LinearGradient>
