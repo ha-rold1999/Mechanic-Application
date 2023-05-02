@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 export default function MapLocation() {
   const { longitude, latitude } = useSelector((state) => state.locationSlice);
-  const coordinates = [{ latitude: latitude, longitude: longitude }];
   return (
     <View style={styles.container}>
       <MapView

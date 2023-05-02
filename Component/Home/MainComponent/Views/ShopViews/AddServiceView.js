@@ -137,7 +137,6 @@ export default function AddService({ navigation, route }) {
               }
 
               if (selectedValueError === "" && priceError === "") {
-                console.log("Accepted");
                 fetchAddThisService();
                 navigation.navigate("ShopDesc");
               }

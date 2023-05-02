@@ -128,15 +128,7 @@ export default function ReportModal(props) {
                         complainee: clienID,
                         reason: complaine,
                       }),
-                    })
-                      .then((res) => res.json())
-                      .then((response) => {
-                        console.log(
-                          "Report Response: " +
-                            JSON.stringify(response, null, 2)
-                        );
-                      })
-                      .catch((error) => console.log(error));
+                    }).catch((error) => console.log(error));
                   } catch (error) {
                     console.log(error);
                   }

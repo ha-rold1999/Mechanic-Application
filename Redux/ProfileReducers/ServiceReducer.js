@@ -36,7 +36,6 @@ export const fetchService = (uuid) => async (dispatch) => {
 };
 
 export const deleteService = (UUID, serviceID) => () => {
-  console.log("ServiceID: " + serviceID);
   fetch(`${server}/api/Mechanic/ServiceOffer`, {
     method: "DELETE",
     headers: {
@@ -44,8 +43,5 @@ export const deleteService = (UUID, serviceID) => () => {
       MechanicUUID: UUID,
       ServiceOfferUUID: serviceID,
     },
-  })
-    .then((res) => res.json())
-    .then((res) => console.log(JSON.stringify(res, null, 2)))
-    .catch((error) => console.log(error));
+  }).catch((error) => console.log(error));
 };

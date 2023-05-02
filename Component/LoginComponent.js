@@ -51,7 +51,6 @@ export default function LoginScreen({ navigation }) {
             setIsPasswordWrong(true);
             setIsSuccess(false);
           } else {
-            console.log("Account DATA: " + JSON.stringify(data, null, 2));
             if (data.AccountData.accountStatus.Role === "MECHANIC") {
               setIsExist(false);
               setIsPasswordWrong(false);

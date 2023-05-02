@@ -180,12 +180,9 @@ export default function InSessionDetails() {
                     sessionDetails.foundData.SessionData.SessionDetails
                   )
                 );
-                console.log("Service Price: " + servicePrice);
-                console.log("Balance: " + balance);
                 const newBal = parseFloat(
                   balance + (parseFloat(servicePrice) - serviceFee)
                 );
-                console.log("New Balance: " + newBal);
                 dispatch(addBalance(UUID, newBal));
               }}
             >
