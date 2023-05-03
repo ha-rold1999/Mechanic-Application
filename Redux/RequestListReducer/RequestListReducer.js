@@ -39,11 +39,21 @@ export const requestListSlice = createSlice({
     setServiceFee: (state, action) => {
       state.serviceFee = action.payload;
     },
+    deleteRequestListData: (state, action) => {
+      state.requestList = [];
+      state.inSession = false;
+      state.sessionDetails = null;
+      state.rating = null;
+      state.myRating = null;
+      state.clienID = null;
+      state.serviceFee = null;
+    },
   },
 });
 
 export const {
   getServiceRequest,
+  deleteRequestListData,
   setInSession,
   clearSessionDetails,
   setRating,

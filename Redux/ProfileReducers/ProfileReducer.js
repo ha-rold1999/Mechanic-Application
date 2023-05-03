@@ -47,10 +47,29 @@ export const profileSlice = createSlice({
     getProfilePic: (state, action) => {
       state.Profile = action.payload;
     },
+    deleteProfileData: (state, action) => {
+      state.UUID = "";
+      state.Firstname = "";
+      state.Lastname = "";
+      state.Contact = "";
+      state.Birthdate = "";
+      state.Address = "";
+      state.LicenseNumber = "";
+      state.Expiry = "";
+      state.Username = "";
+      state.Email = "";
+      state.Balance = 0;
+      state.ShopID = "";
+      state.ShopName = "";
+      state.ShopDescripction = "";
+      state.Profile = null;
+      state.Suspended = null;
+    },
   },
 });
 
-export const { getProfile, getProfilePic } = profileSlice.actions;
+export const { getProfile, getProfilePic, deleteProfileData } =
+  profileSlice.actions;
 export const profileSliceReducers = profileSlice.reducer;
 
 export const deleteAccount = (UUID) => () => {

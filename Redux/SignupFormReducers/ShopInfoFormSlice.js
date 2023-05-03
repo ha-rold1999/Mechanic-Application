@@ -28,11 +28,21 @@ const shopDetailsSlice = createSlice({
         state.formError = true;
       }
     },
+    deleteShopInfoData: (state, action) => {
+      state.shopName = "";
+      state.shopDescription = "";
+      state.shopNameError = "";
+      state.formError = false;
+    },
   },
 });
 
-export const { handleShopname, handleShopDesc, checkShopForm } =
-  shopDetailsSlice.actions;
+export const {
+  handleShopname,
+  handleShopDesc,
+  checkShopForm,
+  deleteShopInfoData,
+} = shopDetailsSlice.actions;
 
 export const shopName = (state) => state.shopDetailsSlice.shopName;
 export const shopDescription = (state) =>

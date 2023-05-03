@@ -9,10 +9,14 @@ export const clientLocationSlice = createSlice({
       state.latitude = action.payload.Data.Latitude;
       state.longitude = action.payload.Data.Longitude;
     },
+    deleteClientLocData: (state, action) => {
+      state.latitude = "";
+      state.longitude = "";
+    },
   },
 });
 
-export const { getLocation } = clientLocationSlice.actions;
+export const { getLocation, deleteClientLocData } = clientLocationSlice.actions;
 export const clientLocationSliceReducer = clientLocationSlice.reducer;
 
 export const getClientLocation = (UUID) => async (dispatch) => {

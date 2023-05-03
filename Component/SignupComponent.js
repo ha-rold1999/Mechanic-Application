@@ -21,6 +21,10 @@ import { useState } from "react";
 import SingnupConfirmation from "./Signup/ModalComponent/SignupConfirmationModal";
 import ShopInfo from "./Signup/ShopDetailsComponent";
 import { server } from "../Static";
+import { deleteAccountCredData } from "../Redux/SignupFormReducers/AccountCredFormReducers";
+import { deleteDriveerLicenseData } from "../Redux/SignupFormReducers/DriveerLicenseFormReducers";
+import { deletePersonaInfoData } from "../Redux/SignupFormReducers/PersonalInfoSlice";
+import { deleteShopInfoData } from "../Redux/SignupFormReducers/ShopInfoFormSlice";
 
 export default function SingupScreen({ navigation }) {
   const apiKey = "API_SECRET-42e016b219421dc83d180bdee27f81dd";
@@ -103,6 +107,10 @@ export default function SingupScreen({ navigation }) {
           } else {
             setIsError(false);
             setIsSuccess(true);
+            checkForm(deleteAccountCredData(""));
+            checkForm(deleteDriveerLicenseData(""));
+            checkForm(deletePersonaInfoData(""));
+            checkForm(deleteShopInfoData(""));
           }
           setIsLoading(false);
         })

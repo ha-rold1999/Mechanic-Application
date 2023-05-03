@@ -11,10 +11,15 @@ export const serviceSlice = createSlice({
     getServiceError: (state, action) => {
       state.error = action.payload;
     },
+    deleteServiceData: (state, action) => {
+      state.error = "";
+      state.serviceLst = [];
+    },
   },
 });
 
-export const { getService, getServiceError } = serviceSlice.actions;
+export const { getService, getServiceError, deleteServiceData } =
+  serviceSlice.actions;
 export const serviceSliceReducer = serviceSlice.reducer;
 
 export const fetchService = (uuid) => async (dispatch) => {

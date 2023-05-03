@@ -9,6 +9,7 @@ import * as loginForm from "../Redux/LoginFormReducers/LoginReducers";
 import LoginModal from "./Signup/ModalComponent/LoginModal";
 import { getProfile } from "../Redux/ProfileReducers/ProfileReducer";
 import { server } from "../Static";
+import { deleteLoginData } from "../Redux/LoginFormReducers/LoginReducers";
 
 export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ export default function LoginScreen({ navigation }) {
               setIsPasswordWrong(false);
               setIsSuccess(true);
               dispatch(getProfile(data));
+              dispatch(deleteLoginData(""));
             } else {
               setIsExist(true);
               setIsPasswordWrong(false);

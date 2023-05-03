@@ -2,6 +2,7 @@ import { Button, StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isOnline } from "../../../Redux/ProfileReducers/ProfileReducer";
+import { deleteProfileData } from "../../../Redux/ProfileReducers/ProfileReducer";
 
 export default function LogoutView({ navigation }) {
   const { UUID } = useSelector((state) => state.profileSlice);
@@ -25,6 +26,7 @@ export default function LogoutView({ navigation }) {
         }}
         onPress={() => {
           dispatch(isOnline(UUID, false));
+          dispatch(deleteProfileData(""));
           navigation.reset({ index: 0, routes: [{ name: "Login" }] });
         }}
       >

@@ -48,11 +48,21 @@ export const locationSlice = createSlice({
     saveSessionLocation: (state, action) => {
       state.sessionMap = action.payload;
     },
+    deleteLocationData: (state, action) => {
+      state.longitude = "";
+      state.latitude = "";
+      state.UUID = "";
+      state.sessionMap = null;
+    },
   },
 });
 
-export const { postLocation, postSessionLocation, saveSessionLocation } =
-  locationSlice.actions;
+export const {
+  postLocation,
+  postSessionLocation,
+  saveSessionLocation,
+  deleteLocationData,
+} = locationSlice.actions;
 export const locationSliceReducer = locationSlice.reducer;
 
 export const getCurrentLocation = (UUID) => (dispatch) => {

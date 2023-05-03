@@ -8,10 +8,13 @@ const billingSlice = createSlice({
     setBillingList: (state, action) => {
       state.billingList = action.payload.BillingData;
     },
+    deleteBillingData: (state, action) => {
+      state.billingList = [];
+    },
   },
 });
 
-export const { setBillingList } = billingSlice.actions;
+export const { setBillingList, deleteBillingData } = billingSlice.actions;
 export const billingSliceReducer = billingSlice.reducer;
 
 export const getBillingLIst = (ShopID, dispatch) => () => {
