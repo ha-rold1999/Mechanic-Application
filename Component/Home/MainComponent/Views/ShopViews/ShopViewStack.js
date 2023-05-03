@@ -13,7 +13,7 @@ export default function ShopStack() {
   useEffect(() => {
     const time = setInterval(() => {
       dispatch(fetchService(UUID));
-    }, 10000);
+    }, 5000);
 
     return () => clearInterval(time);
   }, [dispatch]);
