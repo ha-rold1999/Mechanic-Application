@@ -10,6 +10,7 @@ import {
   Linking,
   ScrollView,
 } from "react-native";
+import Loading from "../../Loading";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchDeleteReq,
@@ -219,8 +220,8 @@ export default function RequestDetails({ route, navigation }) {
   }
 
   return (
-    <View>
-      <ActivityIndicator />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Loading />
     </View>
   );
 }

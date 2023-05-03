@@ -10,6 +10,7 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+import Loading from "../../Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { getReview } from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { AirbnbRating, Rating } from "react-native-ratings";
@@ -288,8 +289,8 @@ export default function Profile({ navigation }) {
     );
   }
   return (
-    <View>
-      <ActivityIndicator />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Loading />
     </View>
   );
 }

@@ -4,7 +4,9 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
 } from "react-native";
+import Loading from "../../Loading";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getBillingLIst } from "../../../../../Redux/BillingReducers/BillingReducers";
@@ -37,15 +39,25 @@ export default function BillingList({ navigation }) {
       );
     } else {
       return (
-        <View>
-          <Text>No Billing as of the moment</Text>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={require("../../../../../assets/Icons/empty.png")}
+            style={{ width: 200, height: 200 }}
+          />
+          <Text>No billing list as of the moment</Text>
         </View>
       );
     }
   } else {
     return (
-      <View>
-        <ActivityIndicator />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Loading />
       </View>
     );
   }

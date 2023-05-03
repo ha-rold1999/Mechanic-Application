@@ -5,6 +5,7 @@ import {
   Text,
   View,
 } from "react-native";
+import Loading from "../MainComponent/Loading";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -34,7 +35,11 @@ export default function WalletPin({ navigation }) {
   };
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Loading />
+      </View>
+    );
   } else if (pincode === "") {
     return (
       <View>

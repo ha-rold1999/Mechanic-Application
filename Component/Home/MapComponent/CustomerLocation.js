@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
+import Loading from "../MainComponent/Loading";
 
 export default function CustomerLocation() {
   const { longitude, latitude } = useSelector(
@@ -36,7 +37,9 @@ export default function CustomerLocation() {
 
   return (
     <>
-      <ActivityIndicator />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Loading />
+      </View>
     </>
   );
 }

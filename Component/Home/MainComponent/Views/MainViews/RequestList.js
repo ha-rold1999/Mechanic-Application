@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchRequestList,
@@ -9,6 +9,7 @@ import RequestCard from "./RequestCard";
 import MapLocation from "../../../MapComponent/MapView";
 import InSessionDetails from "./InSessionDetails";
 import { LinearGradient } from "expo-linear-gradient";
+import Loading from "../../Loading";
 
 export default function RequestList({ navigation }) {
   const { UUID } = useSelector((state) => state.profileSlice);
@@ -74,16 +75,27 @@ export default function RequestList({ navigation }) {
           end={{ x: 1, y: 1 }}
         >
           <MapLocation />
-          <Text>No Request as of the moment</Text>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../../../../../assets/Icons/empty.png")}
+              style={{ width: 200, height: 200 }}
+            />
+            <Text>No request as of the moment</Text>
+          </View>
         </LinearGradient>
       );
     }
   }
 
   return (
-    <View>
-      <Text>Request List Here</Text>
-      <ActivityIndicator />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Loading />
     </View>
   );
 }

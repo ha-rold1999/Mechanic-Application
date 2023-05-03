@@ -7,6 +7,7 @@ import {
   Image,
   Linking,
 } from "react-native";
+import Loading from "../MainComponent/Loading";
 import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { useSelector, useDispatch } from "react-redux";
@@ -38,7 +39,11 @@ export default function SessionMap({ SessionID, SessionDetails }) {
   }, [dispatch]);
 
   if (isLoading || sessionMap === null) {
-    return <ActivityIndicator />;
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Loading />
+      </View>
+    );
   } else {
     return (
       <View style={{ paddingHorizontal: 10 }}>
