@@ -43,15 +43,13 @@ export default function Shop(props) {
               alignItems: "center",
             }}
           >
-            {/* <Pressable
+            <Pressable
               style={{
                 padding: 5,
                 borderRadius: 10,
                 borderWidth: 1,
               }}
               onPress={() => {
-                console.log("UUID: " + UUID);
-                console.log("serviceID: " + ServiceID);
                 dispatch(deleteService(UUID, ServiceID));
                 props.navigation.reset({
                   index: 0,
@@ -60,7 +58,7 @@ export default function Shop(props) {
               }}
             >
               <Text style={{ color: "red" }}>DELETE</Text>
-            </Pressable> */}
+            </Pressable>
           </View>
         </View>
       </>
@@ -95,18 +93,16 @@ export default function Shop(props) {
 
         {serviceLst.length === 0 && <Text>You have no services offered</Text>}
         <View style={{ width: "100%", alignItems: "center" }}>
-          {serviceLst.map(
-            ({ ServiceName, UUID, Price, ServiceExpertise, ServiceID }) => (
-              <View style={{ ...styles.serviceOffer }} key={UUID}>
-                <ServiceList
-                  ServiceName={ServiceName}
-                  Price={Price}
-                  ServiceExpertise={ServiceExpertise}
-                  ServiceID={ServiceID}
-                />
-              </View>
-            )
-          )}
+          {serviceLst.map(({ ServiceName, UUID, Price, ServiceExpertise }) => (
+            <View style={{ ...styles.serviceOffer }} key={UUID}>
+              <ServiceList
+                ServiceName={ServiceName}
+                Price={Price}
+                ServiceExpertise={ServiceExpertise}
+                ServiceID={UUID}
+              />
+            </View>
+          ))}
         </View>
         <View style={{ ...styles.buttonContainer }}>
           <View

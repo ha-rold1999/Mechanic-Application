@@ -48,6 +48,10 @@ export default function PhoneCamera(props) {
 
   return (
     <Modal animationType="slide" transparent={true} visible={props.openCamera}>
+      <Button
+        title="Close Camera"
+        onPress={() => props.setOpenCamera(!props.openCamera)}
+      />
       <View style={styles.container}>
         {!image ? (
           <>
@@ -78,10 +82,6 @@ export default function PhoneCamera(props) {
                 <ActivityIndicator size="large" color="#0000ff" />
               </View>
             )}
-            <Button
-              title="Close Camera"
-              onPress={() => props.setOpenCamera(!props.openCamera)}
-            />
             <Image source={{ uri: image }} style={{ flex: 1 }} />
             {
               <Button
