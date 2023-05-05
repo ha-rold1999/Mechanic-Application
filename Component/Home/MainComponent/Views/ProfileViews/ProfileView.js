@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getReview } from "../../../../../Redux/RequestListReducer/RequestListReducer";
 import { AirbnbRating, Rating } from "react-native-ratings";
 import PhoneCamera from "./Camera";
-import { server } from "../../../../../Static";
+import { server, adminserver } from "../../../../../Static";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Clipboard from "expo-clipboard";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -207,7 +207,7 @@ export default function Profile({ navigation }) {
                     alignItems: "center",
                   }}
                   onPress={() => {
-                    let url = `http://192.53.114.221/gcash?merchant=AYUS@ICTEAM&amount=100&redirecturl=AYUS_UID_${UUID}_AMT_100`;
+                    let url = `${adminserver}/gcash?merchant=AYUS@ICTEAM&amount=100&redirecturl=AYUS_UID_${UUID}_AMT_100`;
                     Linking.openURL(url);
                   }}
                 >
