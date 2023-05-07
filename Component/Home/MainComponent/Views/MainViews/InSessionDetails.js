@@ -8,6 +8,8 @@ import { postBilling } from "../../../../../Redux/BillingReducers/BillingReducer
 import ReviewModal from "./ReviewModal";
 import ReportModal from "./ReportModal";
 import { getUserWallet } from "../../../../../Redux/WalletReducers/WalletReducer";
+import { checkSession } from "../../../../../Redux/RequestListReducer/RequestListReducer";
+import { currancyFormat } from "../../../../../Static";
 
 export default function InSessionDetails() {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ export default function InSessionDetails() {
 
   useEffect(() => {
     dispatch(getUserWallet(UUID));
-  }, [inSession]);
+  }, [inSession, sessionDetails]);
 
   if (inSession && sessionDetails !== null) {
     return (
@@ -40,6 +42,7 @@ export default function InSessionDetails() {
     const serviceDetails = datas[0].split(":");
     const servicePrice = serviceDetails[2];
     const serviceName = serviceDetails[1];
+    const flag = sessionDetails.foundData.Flag;
     return (
       <View style={{ paddingHorizontal: 10 }}>
         <View style={{ alignItems: "center" }}>
@@ -94,7 +97,7 @@ export default function InSessionDetails() {
                   source={require("../../../../../assets/Icons/money.png")}
                   style={{ width: 20, height: 20 }}
                 />
-                <Text>{servicePrice}</Text>
+                <Text>{currancyFormat.format(servicePrice)}</Text>
               </View>
               <View
                 style={{
@@ -171,19 +174,33 @@ export default function InSessionDetails() {
                 borderRadius: 10,
               }}
               onPress={() => {
-                dispatch(clearSessionDetails(null));
-                dispatch(
-                  postBilling(
-                    ShopID,
-                    serviceFee,
-                    serviceName,
-                    sessionDetails.foundData.SessionData.SessionDetails
-                  )
-                );
-                const newBal = parseFloat(
-                  balance + (parseFloat(servicePrice) - serviceFee)
-                );
-                dispatch(addBalance(UUID, newBal));
+                if (flag === "Cash") {
+                  dispatch(clearSessionDetails(null));
+                  dispatch(
+                    postBilling(
+                      ShopID,
+                      serviceFee,
+                      serviceName,
+                      sessionDetails.foundData.SessionData.SessionDetails
+                    )
+                  );
+                  const newBal = parseFloat(balance - serviceFee);
+                  dispatch(addBalance(UUID, newBal));
+                } else {
+                  dispatch(clearSessionDetails(null));
+                  dispatch(
+                    postBilling(
+                      ShopID,
+                      serviceFee,
+                      serviceName,
+                      sessionDetails.foundData.SessionData.SessionDetails
+                    )
+                  );
+                  const newBal = parseFloat(
+                    balance + (parseFloat(servicePrice) - serviceFee)
+                  );
+                  dispatch(addBalance(UUID, newBal));
+                }
               }}
             >
               <Text style={{ color: "white", fontSize: 20, fontWeight: "700" }}>

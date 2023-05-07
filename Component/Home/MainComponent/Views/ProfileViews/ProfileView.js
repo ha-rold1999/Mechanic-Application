@@ -21,6 +21,7 @@ import * as Clipboard from "expo-clipboard";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getUserWallet } from "../../../../../Redux/WalletReducers/WalletReducer";
 import { Linking } from "react-native";
+import { currancyFormat } from "../../../../../Static";
 
 export default function Profile({ navigation }) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -82,7 +83,7 @@ export default function Profile({ navigation }) {
       >
         <View style={{ flex: 1 }}>
           {/* ID */}
-          <View style={{ flexDirection: "row" }}>
+          {/* <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               onPress={() => {
                 Clipboard.setStringAsync(UUID);
@@ -90,15 +91,16 @@ export default function Profile({ navigation }) {
               }}
               style={{ flexDirection: "row", alignItems: "center" }}
             >
-              <Text>ID: {UUID}</Text>
+              
               <View style={{ alignItems: "flex-end" }}>
                 <Image
                   source={require("../../../../../assets/Icons/copy.png")}
                   style={{ width: 15, height: 15 }}
                 />
               </View>
+              <Text>Copy ID</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           {/* Card View */}
           <View
@@ -199,7 +201,7 @@ export default function Profile({ navigation }) {
                   source={require("../../../../../assets/Icons/wallet.png")}
                   style={{ width: 20, height: 20, marginRight: 5 }}
                 />
-                <Text>My Balance: {balance}</Text>
+                <Text>{currancyFormat.format(balance)}</Text>
                 <Pressable
                   style={{
                     borderRadius: 20,
@@ -277,6 +279,12 @@ export default function Profile({ navigation }) {
                 </View>
               )}
             </View>
+          </View>
+          <View style={{alignItems:"center"}}>
+
+          <Pressable style={{paddingVertical:10, paddingHorizontal:40, backgroundColor:"#209589", margin:10, borderRadius:10}} onPress={()=>{navigation.reset({ index: 0, routes: [{ name: "Profile" }] });}}>
+            <Text style={{color:"white"}}>Refresh Profile</Text>
+          </Pressable>
           </View>
           <PhoneCamera
             openCamera={openCamera}

@@ -89,7 +89,7 @@ export default function RequestDetails({ route, navigation }) {
             }}
           >
             <View>
-              <Text style={{ fontSize: 10 }}>Client ID: {clientID}</Text>
+              {/* <Text style={{ fontSize: 10 }}>Client ID: {clientID}</Text> */}
               <Text style={{ fontSize: 20, fontWeight: "500" }}>{fName}</Text>
               <Text>
                 <Rating

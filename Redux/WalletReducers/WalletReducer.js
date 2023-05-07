@@ -3,7 +3,7 @@ import { apiKey, server } from "../../Static";
 
 export const walletSlice = createSlice({
   name: "walletSlice",
-  initialState: { pincode: "", balance: 0 },
+  initialState: { pincode: "", balance: null },
   reducers: {
     getWallet: (state, action) => {
       state.pincode = action.payload.WalletData.Pincode;

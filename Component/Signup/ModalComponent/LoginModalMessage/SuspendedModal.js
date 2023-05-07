@@ -1,8 +1,13 @@
-import { Modal, StyleSheet, Text, View, Image } from "react-native";
+import { Modal, StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import modelStyle from "../../../../Style/Component/Modal/StyleModelComponent";
+import { deleteProfileData, isOnline } from "../../../../Redux/ProfileReducers/ProfileReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SuspendedModal(props) {
+  const { UUID } = useSelector((state) => state.profileSlice);
+  const navigation = props.navigation;
+  const dispatch = useDispatch();
   return (
     <Modal animationType="slide" transparent={true} visible={true}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -25,6 +30,24 @@ export default function SuspendedModal(props) {
           <Text style>Your account has been suspended.</Text>
           <Text>Please contact AYUS admin</Text>
           <Text>AYUS@gmail.com</Text>
+          <Pressable
+        style={{
+          backgroundColor: "#02599B",
+          paddingHorizontal: 100,
+          paddingVertical: 10,
+          borderRadius: 10,
+          marginTop: 10,
+        }}
+        onPress={() => {
+          dispatch(isOnline(UUID, false));
+          dispatch(deleteProfileData(""));
+          navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 20, fontWeight: "700" }}>
+          Logout
+        </Text>
+      </Pressable>
         </View>
       </View>
     </Modal>

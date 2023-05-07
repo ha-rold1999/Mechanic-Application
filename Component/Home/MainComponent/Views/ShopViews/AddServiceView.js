@@ -100,7 +100,7 @@ export default function AddService({ navigation, route }) {
           />
         </View>
         {priceError && <Text style={{ color: "red" }}>{priceError}</Text>}
-        <Text>Enter Your Qualificatio For This Service</Text>
+        <Text>Enter Your Qualification For This Service</Text>
         <View style={FormStyle.textInputView}>
           <TextInput
             style={{
