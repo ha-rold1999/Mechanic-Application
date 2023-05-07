@@ -80,7 +80,7 @@ export default function SessionMap({ SessionID, SessionDetails }) {
         >
           <View style={{ height: "10%" }}>
             <Text
-              style={{ fontSize: 30, fontWeight: "600", textAlign: "center" }}
+              style={{ fontSize: 15, fontWeight: "600", textAlign: "center" }}
             >
               {SessionDetails.split("|")[0].split(":")[1]}
             </Text>
