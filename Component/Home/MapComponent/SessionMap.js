@@ -34,9 +34,9 @@ export default function SessionMap({ SessionID, SessionDetails }) {
       );
       dispatch(getSessionLocation(SessionID));
       setIsLoading(false);
-    }, 10000);
+    }, 5000);
     return () => clearInterval(time);
-  }, [dispatch]);
+  }, [dispatch, sessionMap]);
 
   if (isLoading || sessionMap === null) {
     return (

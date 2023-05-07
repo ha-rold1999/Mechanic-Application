@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   ImageBackground,
+  ScrollView
 } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -13,6 +14,7 @@ import { fetchService } from "../../../../../Redux/ProfileReducers/ServiceReduce
 import { apiKey } from "../../../../../Static";
 import { Pressable } from "react-native";
 import { deleteService } from "../../../../../Redux/ProfileReducers/ServiceReducer";
+import { currancyFormat } from "../../../../../Static";
 
 export default function Shop(props) {
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ export default function Shop(props) {
         <View style={{ flexDirection: "row" }}>
           <View style={{ width: "70%" }}>
             <Text>Service: {ServiceName}</Text>
-            <Text>Price: {Price}</Text>
+            <Text>Price: {currancyFormat.format(Price)}</Text>
             <Text>Expertise: {ServiceExpertise}</Text>
           </View>
           <View
@@ -92,8 +94,9 @@ export default function Shop(props) {
         </View>
 
         {serviceLst.length === 0 && <Text>You have no services offered</Text>}
-        <View style={{ width: "100%", alignItems: "center" }}>
-          {serviceLst.map(({ ServiceName, UUID, Price, ServiceExpertise }) => (
+        <View style={{paddingLeft:"12%", flex:1}}>
+        <ScrollView style={{ width: "100%"}} contentContainerStyle={{ flexGrow: 1 }}>
+        {serviceLst.map(({ ServiceName, UUID, Price, ServiceExpertise }) => (
             <View style={{ ...styles.serviceOffer }} key={UUID}>
               <ServiceList
                 ServiceName={ServiceName}
@@ -103,7 +106,10 @@ export default function Shop(props) {
               />
             </View>
           ))}
+        </ScrollView>
         </View>
+        
+          
         <View style={{ ...styles.buttonContainer }}>
           <View
             style={{

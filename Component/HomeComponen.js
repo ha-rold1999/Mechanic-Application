@@ -13,16 +13,24 @@ import SuspendedModal from "./Signup/ModalComponent/LoginModalMessage/SuspendedM
 import { isOnline } from "../Redux/ProfileReducers/ProfileReducer";
 import { server } from "../Static";
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import PhoneCamera from "./Home/MainComponent/Views/ProfileViews/Camera";
+import { getUserWallet } from "../Redux/WalletReducers/WalletReducer";
+import { Linking } from "react-native";
+import { deleteProfileData } from "../Redux/ProfileReducers/ProfileReducer";
+import { adminserver } from "../Static";
+import Loading from "./Home/MainComponent/Loading";
 
-export default function HomeComponent() {
+export default function HomeComponent({ navigation }) {
   const { UUID, Suspended } = useSelector((state) => state.profileSlice);
+  const { balance } = useSelector((state) => state.walletSlice);
   const Drawer = createDrawerNavigator();
+  const [hasBalance, setHasbalance] = useState(true);
   const dispatch = useDispatch();
   const [hasLicense, setHasLicense] = useState(true);
   const [openCamera, setOpenCamera] = useState(false);
   const [isLoaded, setIsLoaded] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   fetch(`${server}/api/Upload/files/${UUID}/LICENSE`)
     .then((response) => {
@@ -39,7 +47,42 @@ export default function HomeComponent() {
   useEffect(() => {
     dispatch(getCurrentLocation(UUID));
     dispatch(isOnline(UUID, true));
+    dispatch(getUserWallet(UUID));
   }, []);
+
+  useEffect(() => {
+    if (balance != null) {
+      if (balance <= 0) {
+        setHasbalance(false);
+        console.log(balance);
+        Alert.alert("Empty Wallet", "Wallet is Empty", [
+          {
+            text: "Add Balance",
+            onPress: () => {
+              console.log("add bal");
+              let url = `${adminserver}/gcash?merchant=AYUS@ICTEAM&amount=100&redirecturl=AYUS_UID_${UUID}_AMT_100`;
+              console.log(url);
+              Linking.openURL(url);
+              setHasbalance(true);
+            },
+          },
+          {
+            text: "Cancel",
+            onPress: () => {
+              dispatch(isOnline(UUID, false));
+              dispatch(deleteProfileData(""));
+              setHasbalance(true);
+              navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+            },
+          },
+        ]);
+        setLoading(false);
+      } else {
+        setHasbalance(true);
+        setLoading(false);
+      }
+    }
+  }, [balance, hasLicense]);
 
   {
     !hasLicense &&
@@ -58,9 +101,41 @@ export default function HomeComponent() {
         ]
       );
   }
+  // {
+  //   !hasBalance &&
+  //     balance <= 0 &&
+  //     Alert.alert("Empty Wallet", "Wallet is Empty", [
+  //       {
+  //         text: "Add Balance",
+  //         onPress: () => {
+  //           console.log("add bal");
+  //           let url = `${adminserver}/gcash?merchant=AYUS@ICTEAM&amount=100&redirecturl=AYUS_UID_${UUID}_AMT_100`;
+  //           console.log(url);
+  //           Linking.openURL(url);
+  //           setHasbalance(true);
+  //         },
+  //       },
+  //       {
+  //         text: "Cancel",
+  //         onPress: () => {
+  //           dispatch(isOnline(UUID, false));
+  //           dispatch(deleteProfileData(""));
+  //           setHasbalance(true);
+  //           navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+  //         },
+  //       },
+  //     ]);
+  // }
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Loading />
+      </View>
+    );
+  }
   return (
     <>
-      {Suspended && <SuspendedModal />}
+      {Suspended && <SuspendedModal navigation={navigation}/>}
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={Main} />
         <Drawer.Screen name="History" component={HistoryTabs} />

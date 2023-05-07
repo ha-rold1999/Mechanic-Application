@@ -1,4 +1,5 @@
 import { View, Text, Pressable, Image } from "react-native";
+import { currancyFormat } from "../../../../../Static";
 
 export default function RequestCard({ details, navigation }) {
   return (
@@ -22,7 +23,7 @@ export default function RequestCard({ details, navigation }) {
           {details.item.Service.split(":")[0]}
         </Text>
         <Text style={{ fontSize: 15 }}>
-          P{details.item.Service.split(":")[1]}
+          {currancyFormat.format(details.item.Service.split(":")[1])}
         </Text>
         <View style={{ flexDirection: "row" }}>
           <Image
