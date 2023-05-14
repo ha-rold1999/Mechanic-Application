@@ -191,13 +191,15 @@ export default function SingupScreen({ navigation }) {
           </ProgressStep>
         </ProgressSteps>
       </View>
-      <View style={{flexDirection:"row"}}>
-        
-      <Text>Already have an account? </Text>
-      <Pressable onPress={()=>{navigation.navigate("Login")}}>
-        <Text style={{color:"blue"}}>Login Here</Text>
-      </Pressable>
-
+      <View style={{ flexDirection: "row" }}>
+        <Text>Already have an account? </Text>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("Login");
+          }}
+        >
+          <Text style={{ color: "blue" }}>Login Here</Text>
+        </Pressable>
       </View>
     </View>
   );

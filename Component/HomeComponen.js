@@ -84,23 +84,30 @@ export default function HomeComponent({ navigation }) {
     }
   }, [balance, hasLicense]);
 
-  {
-    !hasLicense &&
-      !openCamera &&
-      Alert.alert(
-        "Proof license",
-        "Please upload a picture of your drivers license",
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              setHasLicense(true);
-              setOpenCamera(true);
-            },
-          },
-        ]
-      );
-  }
+  // {
+  //   !hasLicense &&
+  //     !openCamera &&
+  //     Alert.alert(
+  //       "Proof license",
+  //       "Please upload a picture of your drivers license",
+  //       [
+  //         {
+  //           text: "Cancel",
+  //           onPress: () => {},
+  //           style: "cancel",
+  //         },
+  //         {
+  //           text: "OK",
+  //           onPress: () => {
+  //             setHasLicense(true);
+  //             setOpenCamera(true);
+  //           },
+  //         },
+  //       ],
+  //       { cancelable: true }
+  //     );
+  // }
+
   // {
   //   !hasBalance &&
   //     balance <= 0 &&
@@ -135,7 +142,7 @@ export default function HomeComponent({ navigation }) {
   }
   return (
     <>
-      {Suspended && <SuspendedModal navigation={navigation}/>}
+      {Suspended && <SuspendedModal navigation={navigation} />}
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={Main} />
         <Drawer.Screen name="History" component={HistoryTabs} />

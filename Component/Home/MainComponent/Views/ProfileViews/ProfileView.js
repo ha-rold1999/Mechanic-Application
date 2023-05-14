@@ -27,6 +27,7 @@ export default function Profile({ navigation }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const [type, setType] = useState("");
 
   const [isExpired, setExpired] = useState(false);
 
@@ -165,6 +166,7 @@ export default function Profile({ navigation }) {
               <TouchableOpacity
                 onPress={() => {
                   setOpenCamera(true);
+                  setType("PROFILE");
                 }}
                 style={style.button}
               >
@@ -264,6 +266,21 @@ export default function Profile({ navigation }) {
               <Text style={{ ...style.lebelText, fontWeight: "800" }}>
                 {Expiry.split("T")[0]}
               </Text>
+              <Pressable
+                style={{
+                  paddingVertical: 10,
+                  paddingHorizontal: 40,
+                  backgroundColor: "#228BD4",
+                  margin: 10,
+                  borderRadius: 10,
+                }}
+                onPress={() => {
+                  setOpenCamera(true);
+                  setType("LICENSE");
+                }}
+              >
+                <Text style={{ color: "white" }}>Proof of License</Text>
+              </Pressable>
               {isExpired && (
                 <View
                   style={{
@@ -280,17 +297,27 @@ export default function Profile({ navigation }) {
               )}
             </View>
           </View>
-          <View style={{alignItems:"center"}}>
-
-          <Pressable style={{paddingVertical:10, paddingHorizontal:40, backgroundColor:"#209589", margin:10, borderRadius:10}} onPress={()=>{navigation.reset({ index: 0, routes: [{ name: "Profile" }] });}}>
-            <Text style={{color:"white"}}>Refresh Profile</Text>
-          </Pressable>
+          <View style={{ alignItems: "center" }}>
+            <Pressable
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 40,
+                backgroundColor: "#209589",
+                margin: 10,
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                navigation.reset({ index: 0, routes: [{ name: "Profile" }] });
+              }}
+            >
+              <Text style={{ color: "white" }}>Refresh Profile</Text>
+            </Pressable>
           </View>
           <PhoneCamera
             openCamera={openCamera}
             setOpenCamera={setOpenCamera}
             setIsLoaded={setIsLoaded}
-            upload={"PROFILE"}
+            upload={type}
           />
         </View>
       </LinearGradient>

@@ -9,6 +9,9 @@ import { useState } from "react";
 import { Provider } from "react-redux";
 import store from "./Redux/Store";
 import "react-native-gesture-handler";
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["new NativeEventEmitter"]);
+LogBox.ignoreAllLogs();
 
 export default function App() {
   /*
